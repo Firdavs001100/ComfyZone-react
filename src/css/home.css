@@ -1,12 +1,63 @@
-/* ================= POPULAR PRODUCTS ================= */
+/* PRODUCT RANGE */
+.product-range {
+  padding: 80px 0;
+  background-color: #ffffff;
+}
 
+.product-range .header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.product-range .header .title {
+  font-size: 32px;
+  font-weight: 600;
+  color: #222222;
+}
+
+.product-range .header .desc {
+  font-size: 16px;
+  color: #777777;
+  margin-top: 6px;
+}
+
+.product-range .cards {
+  justify-content: center;
+}
+
+.product-range .card {
+  width: 100%;
+  max-width: 360px;
+  cursor: pointer;
+  align-items: center;
+}
+
+.product-range .card img {
+  width: 100%;
+  height: 360px;
+  border-radius: 12px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.product-range .card .label {
+  margin-top: 16px;
+  font-size: 18px;
+  font-weight: 500;
+  color: #222222;
+  text-align: center;
+}
+
+.product-range .card:hover img {
+  transform: scale(1.03);
+}
+
+/* POPULAR PRODUCTS */
 .homepage .popular-products-frame {
   width: 100%;
   padding: 80px 0;
   background: #fcf8f3;
 }
-
-/* ================= SECTION TITLE ================= */
 
 .homepage .popular-products-frame .category-title {
   display: flex;
@@ -14,10 +65,8 @@
   font-size: 32px;
   font-weight: 600;
   letter-spacing: 0.6px;
-  color: #222;
+  color: #222222;
 }
-
-/* ================= ROW LAYOUT ================= */
 
 .homepage .popular-products-frame .cards-frame {
   width: 100%;
@@ -28,8 +77,6 @@
   justify-content: space-between;
   align-items: stretch;
 }
-
-/* ================= CARD ================= */
 
 .homepage .popular-products-frame .card {
   flex: 1;
@@ -48,15 +95,12 @@
     box-shadow 0.35s ease;
 }
 
-/* Lift on hover */
 .homepage .popular-products-frame .card:hover {
   transform: translateY(-10px);
   box-shadow:
     0 20px 40px rgba(184, 142, 47, 0.25),
     0 6px 16px rgba(0, 0, 0, 0.1);
 }
-
-/* ================= IMAGE ================= */
 
 .homepage .popular-products-frame .card img {
   width: 100%;
@@ -69,8 +113,6 @@
   transform: scale(1.06);
 }
 
-/* ================= IMAGE OVERLAY ================= */
-
 .homepage .popular-products-frame .card-cover {
   background: linear-gradient(
     to top,
@@ -80,8 +122,6 @@
   );
 }
 
-/* ================= CARD TITLE ================= */
-
 .homepage .popular-products-frame .card .card-title {
   font-size: 20px;
   font-weight: 600;
@@ -89,12 +129,9 @@
   color: #ffffff;
 }
 
-/* View count icon */
 .homepage .popular-products-frame .card svg {
   color: #d6c59a;
 }
-
-/* ================= CARD FOOTER ================= */
 
 .homepage .popular-products-frame .card .MuiCardOverflow-root {
   background: linear-gradient(
@@ -106,7 +143,6 @@
   border-top: none;
 }
 
-/* Description text ONLY */
 .homepage
   .popular-products-frame
   .card
@@ -116,8 +152,6 @@
   line-height: 1.5;
   color: #555;
 }
-
-/* ================= NO DATA ================= */
 
 .homepage .popular-products-frame .no-data {
   width: 100%;
@@ -129,8 +163,7 @@
   color: #c1a36f;
 }
 
-/* ================= AD ================= */
-
+/* ADVERTISEMENT */
 .homepage .ads-restaurant-frame {
   width: 100%;
   height: 693px;
@@ -138,6 +171,7 @@
   overflow: hidden;
   position: relative;
   box-shadow: -3px 0px 20px 14px #34343480;
+  margin: 5px 0;
 }
 
 .homepage .ads-restaurant-frame .ads-video {
@@ -149,13 +183,10 @@
   object-fit: cover;
   z-index: -1;
 }
-
 /* ================= TOP PROVIDERS ================= */
-
-
 .top-providers-frame {
   padding: 60px 0;
-  background-color: #ffffff; 
+  background-color: #ffffff;
 }
 
 .top-providers-frame .title {
@@ -165,7 +196,7 @@
   font-size: 32px;
   font-weight: 600;
   letter-spacing: 0.6px;
-  color: #222;
+  color: #222222;
 }
 
 .providers-cards-frame {
@@ -175,22 +206,22 @@
   gap: 28px;
 }
 
-/* Card */
 .provider-card {
-  flex: 1 1 45%; /* two per row */
+  flex: 1 1 45%;
   max-width: 280px;
   background-color: #fff;
   border-radius: 16px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   position: relative;
   overflow: visible;
-  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
   cursor: pointer;
-
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  height: 380px; /* fixed height */
+  height: 380px;
   padding: 16px;
 }
 
@@ -199,7 +230,6 @@
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
 }
 
-/* Logo */
 .provider-logo {
   width: 80px !important;
   height: 80px !important;
@@ -212,26 +242,22 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-/* Typography */
 .provider-card .MuiTypography-root {
   color: #222;
 }
 
-/* Verified Icon */
 .provider-card .MuiSvgIcon-root {
   color: #c1a36f;
 }
 
-/* Categories (Chips) */
 .provider-card .categories-wrapper {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 2 columns */
+  grid-template-columns: repeat(2, 1fr);
   gap: 6px 8px;
   justify-items: center;
   margin-top: 8px;
 }
 
-/* Individual Chip */
 .MuiChip-root {
   font-size: 0.75rem;
   margin: 0;
@@ -245,16 +271,14 @@
   box-sizing: border-box;
 }
 
-/* Bottom section: description + popularity bar */
 .provider-card .bottom-section {
-  margin-top: auto; /* stick to bottom */
+  margin-top: auto;
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-/* Description */
 .provider-card .MuiTypography-body2 {
   color: #555;
   font-style: italic;
@@ -262,7 +286,6 @@
   margin-top: 6px;
 }
 
-/* Popularity bar */
 .MuiLinearProgress-root {
   margin-top: 8px;
   border-radius: 3px;
@@ -278,7 +301,8 @@
 .events-frame {
   width: 100%;
   min-height: 650px;
-  background: #f8f8ff;
+  /* background: #ffffff; */
+  background: #fcf8f3;
   display: flex;
   justify-content: center;
   padding: 60px 0;
@@ -296,10 +320,10 @@
   margin-bottom: 40px;
   display: flex;
   justify-content: center;
-  font-size: 34px;
+  font-size: 32px;
   font-weight: 700;
   letter-spacing: 1px;
-  color: #c1a36f; 
+  color: #222222;
   text-transform: uppercase;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.08);
   font-family: "Poppins", sans-serif;
@@ -330,7 +354,6 @@
   box-shadow: 0 24px 40px rgba(0, 0, 0, 0.15);
 }
 
-/* Image */
 .event-img {
   width: 100%;
   height: 250px;
@@ -344,7 +367,6 @@
   transform: scale(1.05);
 }
 
-/* Description */
 .event-desc {
   padding: 16px;
   display: flex;
@@ -359,7 +381,7 @@
 .event-title {
   font-size: 20px;
   font-weight: 700;
-  color: #b38b5b; /* warm, stylish */
+  color: #b38b5b;
   letter-spacing: 0.5px;
 }
 
@@ -375,7 +397,6 @@
   line-height: 1.5;
 }
 
-/* Info Row */
 .event-info {
   margin-top: 10px;
   display: flex;
@@ -403,7 +424,6 @@
   filter: invert(45%) sepia(30%) saturate(400%) hue-rotate(10deg);
 }
 
-/* Pagination & navigation */
 .prev-next-frame {
   display: flex;
   justify-content: center;
@@ -427,32 +447,29 @@
   transform: scale(1.2);
 }
 
-/* ===== Section ===== */
-
+/* ================= FURNITURE SHOWCASE ================= */
 .furniture-showcase {
   width: 100vw;
   padding: 80px 0;
   background: #fff;
 }
 
-/* Title */
 .furniture-showcase .title-section {
   text-align: center;
-  margin-bottom: 70px;
+  margin-bottom: 40px;
 }
 
 .furniture-showcase .subtitle {
   font-size: 14px;
   color: #777;
-  margin-bottom: 6px;
+  margin-bottom: 0px;
 }
 
 .furniture-showcase .main-title {
   font-size: 34px;
   font-weight: 700;
+  margin: 0px;
 }
-
-/* ===== GRID ===== */
 
 .furniture-showcase .image-grid {
   display: grid;
@@ -460,14 +477,12 @@
   grid-template-rows: 260px 180px 220px;
   gap: 24px;
   padding: 0 40px;
-
   grid-template-areas:
     "shelf desk dining bedroom"
     "shelf tables dining kitchen"
     "chair tables decor kitchen";
 }
 
-/* Base */
 .furniture-showcase .grid-item {
   overflow: hidden;
 }
@@ -478,8 +493,6 @@
   object-fit: cover;
   display: block;
 }
-
-/* ===== Areas ===== */
 
 .furniture-showcase .shelf {
   grid-area: shelf;
@@ -505,8 +518,6 @@
 .furniture-showcase .kitchen {
   grid-area: kitchen;
 }
-
-/* ===== Responsive ===== */
 
 @media (max-width: 1024px) {
   .furniture-showcase .image-grid {
