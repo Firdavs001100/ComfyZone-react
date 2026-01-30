@@ -1,51 +1,65 @@
 /* =========================================
-   USER PAGE STYLES
+   USER PAGE STYLES - MODERN & SMOOTH
    ========================================= */
 
 .user-page {
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  background: linear-gradient(135deg, #fdfbf7 0%, #f8f4ee 100%);
   min-height: 100vh;
-  padding: 40px 0;
+  padding: 60px 0;
 }
 
-.my-page-frame {
-  display: flex;
+.user-page .my-page-frame {
   flex-direction: row !important;
-  gap: 30px;
-  margin-top: 20px;
+  gap: 24px;
+  margin-top: 0;
 }
 
 /* =========================================
    LEFT PANEL - SETTINGS
    ========================================= */
 
-.my-page-left {
+.user-page .my-page-left {
   flex: 2;
-  background: #ffffff;
-  border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  padding: 30px;
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  box-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.05),
+    0 20px 40px -10px rgba(193, 163, 111, 0.1);
+  padding: 40px;
+  border: 1px solid rgba(193, 163, 111, 0.08);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.my-page-left:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+.user-page .my-page-left:hover {
+  box-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.05),
+    0 30px 60px -15px rgba(193, 163, 111, 0.2);
+  transform: translateY(-2px);
 }
 
-.menu-name {
+.user-page .menu-name {
   font-size: 28px;
-  font-weight: 700;
-  color: #2c3e50;
-  margin-bottom: 25px;
-  padding-bottom: 15px;
-  border-bottom: 3px solid #3498db;
-  letter-spacing: 0.5px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 32px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(193, 163, 111, 0.15);
+  letter-spacing: -0.5px;
+  position: relative;
 }
 
-.menu-content {
+.user-page .menu-name::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(90deg, #c1a36f, transparent);
+}
+
+.user-page .menu-content {
   width: 100%;
 }
 
@@ -53,297 +67,366 @@
    RIGHT PANEL - USER INFO
    ========================================= */
 
-.my-page-right {
+.user-page .my-page-right {
   flex: 1;
-  min-width: 320px;
+  min-width: 340px;
 }
 
-.order-info-box {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
-  padding: 40px 30px;
-  color: #ffffff;
-  position: sticky;
-  top: 20px;
-  transition: transform 0.3s ease;
+.user-page .order-info-box {
+  background: linear-gradient(135deg, #e9e1d3 0%, #e4d6c6 100%);
+  border-radius: 24px;
+  box-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.1),
+    0 30px 60px -10px rgba(193, 163, 111, 0.35);
+  padding: 48px 32px;
+  color: #1a1a1a;
+  border: 1px solid rgba(193, 163, 111, 0.2);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.order-info-box:hover {
-  transform: translateY(-5px);
+.user-page .order-info-box:hover {
+  box-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.1),
+    0 40px 80px -15px rgba(193, 163, 111, 0.45);
+  transform: translateY(-4px);
 }
 
-.order-user-img {
+.user-page .order-user-img {
   position: relative;
-  width: 140px;
-  height: 140px;
-  margin-bottom: 20px;
+  width: 120px;
+  height: 120px;
+  margin-bottom: 24px;
 }
 
-.order-user-avatar {
+.user-page .order-user-avatar {
   width: 100%;
   height: 100%;
   border-radius: 50%;
   object-fit: cover;
-  border: 5px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease;
+  border: 3px solid #c1a36f;
+  box-shadow: 
+    0 8px 24px rgba(0, 0, 0, 0.15),
+    0 0 0 6px rgba(193, 163, 111, 0.15);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.order-user-avatar:hover {
+.user-page .order-user-avatar:hover {
   transform: scale(1.05);
+  border-color: #b38b5b;
+  box-shadow: 
+    0 12px 32px rgba(0, 0, 0, 0.2),
+    0 0 0 6px rgba(193, 163, 111, 0.2);
 }
 
-.order-user-icon-box {
+.user-page .order-user-icon-box {
   position: absolute;
-  bottom: 5px;
-  right: 5px;
-  width: 40px;
-  height: 40px;
-  background: #ffffff;
+  bottom: 0;
+  right: 0;
+  width: 38px;
+  height: 38px;
+  background: #c1a36f;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-.order-user-icon-box img {
-  width: 24px;
-  height: 24px;
+.user-page .order-user-icon-box img {
+  width: 18px;
+  height: 18px;
+  filter: brightness(0) invert(1);
 }
 
-.order-user-name {
+.user-page .order-user-name {
   font-size: 24px;
-  font-weight: 700;
-  margin-bottom: 8px;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.order-user-email {
-  font-size: 14px;
-  opacity: 0.9;
-  margin-bottom: 8px;
-}
-
-.order-user-prof {
-  font-size: 13px;
-  background: rgba(255, 255, 255, 0.2);
-  padding: 6px 16px;
-  border-radius: 20px;
-  margin-bottom: 8px;
-  backdrop-filter: blur(10px);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
   font-weight: 600;
+  margin-bottom: 8px;
+  letter-spacing: -0.3px;
+  color: #2d2d2d;
 }
 
-.user-media-box {
+.user-page .order-user-email {
+  font-size: 13px;
+  color: #666666;
+  margin-bottom: 12px;
+  font-weight: 400;
+  letter-spacing: 0.3px;
+}
+
+.user-page .order-user-prof {
+  font-size: 11px;
+  background: rgba(193, 163, 111, 0.2);
+  padding: 6px 14px;
+  border-radius: 12px;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+  border: 1px solid rgba(193, 163, 111, 0.3);
+  color: #8b7355;
+}
+
+.user-page .user-media-box {
   display: flex;
-  gap: 15px;
+  gap: 12px;
   justify-content: center;
-  margin: 25px 0;
-  padding: 20px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  margin: 32px 0 28px 0;
+  padding: 24px 0;
+  border-top: 1px solid rgba(193, 163, 111, 0.25);
+  border-bottom: 1px solid rgba(193, 163, 111, 0.25);
 }
 
-.user-media-box svg {
-  font-size: 28px;
+.user-page .user-media-box svg {
+  font-size: 22px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  opacity: 0.8;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0.6;
+  border-radius: 12px;
+  background: rgba(193, 163, 111, 0.1);
+  color: #8b7355;
 }
 
-.user-media-box svg:hover {
+.user-page .user-media-box svg:hover {
   opacity: 1;
-  transform: translateY(-3px) scale(1.1);
+  background: rgba(193, 163, 111, 0.2);
+  transform: translateY(-3px);
+  color: #6d5940;
 }
 
-.user-desc {
-  font-size: 14px;
-  line-height: 1.6;
+.user-page .user-desc {
+  font-size: 13px;
+  line-height: 1.8;
   text-align: center;
-  opacity: 0.9;
+  color: #666666;
   margin: 0;
-  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0.2px;
 }
 
 /* =========================================
    SETTINGS SECTION
    ========================================= */
 
-.settings {
+.user-page .settings {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 32px;
 }
 
-.member-media-frame {
+.user-page .member-media-frame {
   display: flex;
   align-items: center;
-  gap: 30px;
-  padding: 25px;
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-  border-radius: 12px;
-  border: 2px dashed #3498db;
-  transition: all 0.3s ease;
+  gap: 32px;
+  padding: 32px;
+  background: rgba(248, 244, 238, 0.5);
+  border-radius: 20px;
+  border: 1px solid rgba(193, 163, 111, 0.12);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.member-media-frame:hover {
-  border-color: #2980b9;
-  box-shadow: 0 5px 15px rgba(52, 152, 219, 0.2);
+.user-page .member-media-frame:hover {
+  background: rgba(248, 244, 238, 0.8);
+  border-color: rgba(193, 163, 111, 0.2);
+  box-shadow: 0 8px 24px rgba(193, 163, 111, 0.08);
 }
 
-.mb-image {
-  width: 120px;
-  height: 120px;
+.user-page .mb-image {
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   object-fit: cover;
-  border: 4px solid #3498db;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
+  border: 3px solid rgba(193, 163, 111, 0.2);
+  box-shadow: 
+    0 4px 16px rgba(0, 0, 0, 0.06),
+    0 0 0 6px rgba(193, 163, 111, 0.05);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.mb-image:hover {
+.user-page .mb-image:hover {
   transform: scale(1.05);
+  border-color: rgba(193, 163, 111, 0.4);
 }
 
-.media-change-box {
+.user-page .media-change-box {
   flex: 1;
 }
 
-.media-change-box span {
-  font-size: 18px;
+.user-page .media-change-box span {
+  font-size: 16px;
   font-weight: 600;
-  color: #2c3e50;
+  color: #1a1a1a;
   display: block;
-  margin-bottom: 5px;
+  margin-bottom: 4px;
+  letter-spacing: -0.2px;
 }
 
-.media-change-box p {
-  font-size: 13px;
-  color: #7f8c8d;
-  margin: 5px 0 15px 0;
+.user-page .media-change-box p {
+  font-size: 12px;
+  color: #888888;
+  margin: 0 0 16px 0;
+  font-weight: 400;
 }
 
-.up-del-box button {
-  background: #3498db;
+.user-page .up-del-box button {
+  background: linear-gradient(135deg, #c1a36f 0%, #b38b5b 100%);
   color: #ffffff;
   padding: 10px 20px;
-  border-radius: 8px;
-  transition: all 0.3s ease;
+  border-radius: 12px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   text-transform: none;
-  font-weight: 600;
+  font-weight: 500;
+  font-size: 13px;
+  border: 1px solid rgba(193, 163, 111, 0.3);
+  box-shadow: 0 2px 8px rgba(193, 163, 111, 0.25);
 }
 
-.up-del-box button:hover {
-  background: #2980b9;
+.user-page .up-del-box button:hover {
+  background: linear-gradient(135deg, #b38b5b 0%, #a47a4d 100%);
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+  box-shadow: 0 4px 16px rgba(193, 163, 111, 0.35);
+  border-color: rgba(193, 163, 111, 0.4);
 }
 
-.up-del-box button svg {
-  margin-right: 8px;
+.user-page .up-del-box button svg {
+  margin-right: 6px;
+  font-size: 18px;
 }
 
 /* =========================================
    INPUT FIELDS
    ========================================= */
 
-.input-frame {
+.user-page .input-frame {
   display: flex;
   gap: 20px;
   width: 100%;
 }
 
-.long-input,
-.short-input {
+.user-page .long-input,
+.user-page .short-input {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.long-input {
+.user-page .long-input {
   flex: 1;
 }
 
-.short-input {
+.user-page .short-input {
   flex: 1;
 }
 
-.spec-label {
-  font-size: 14px;
+.user-page .spec-label {
+  font-size: 12px;
   font-weight: 600;
-  color: #34495e;
-  margin-bottom: 5px;
-  letter-spacing: 0.3px;
+  color: #666666;
+  margin-bottom: 6px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
 }
 
-.spec-input,
-.spec-textarea {
-  padding: 14px 18px;
-  border: 2px solid #e0e6ed;
-  border-radius: 10px;
-  font-size: 15px;
-  color: #2c3e50;
-  transition: all 0.3s ease;
-  background: #ffffff;
+.user-page .spec-input,
+.user-page .spec-textarea {
+  padding: 14px 16px;
+  border: 1px solid rgba(193, 163, 111, 0.15);
+  border-radius: 12px;
+  font-size: 14px;
+  color: #1a1a1a;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: rgba(255, 255, 255, 0.8);
   font-family: inherit;
+  font-weight: 400;
 }
 
-.spec-input:focus,
-.spec-textarea:focus {
+.user-page .spec-input:hover,
+.user-page .spec-textarea:hover {
+  border-color: rgba(193, 163, 111, 0.25);
+  background: rgba(255, 255, 255, 1);
+}
+
+.user-page .spec-input:focus,
+.user-page .spec-textarea:focus {
   outline: none;
-  border-color: #3498db;
-  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
-  transform: translateY(-2px);
+  border-color: rgba(193, 163, 111, 0.4);
+  background: #ffffff;
+  box-shadow: 
+    0 0 0 4px rgba(193, 163, 111, 0.08),
+    0 2px 8px rgba(193, 163, 111, 0.1);
+  transform: translateY(-1px);
 }
 
-.spec-input::placeholder,
-.spec-textarea::placeholder {
-  color: #95a5a6;
-  font-style: italic;
+.user-page .spec-input::placeholder,
+.user-page .spec-textarea::placeholder {
+  color: #aaaaaa;
+  font-weight: 300;
 }
 
-.spec-textarea {
+.user-page .spec-textarea {
   min-height: 120px;
   resize: vertical;
   font-family: inherit;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 /* =========================================
    SAVE BUTTON
    ========================================= */
 
-.save-box {
+.user-page .save-box {
   display: flex;
   justify-content: flex-end;
-  margin-top: 10px;
+  margin-top: 16px;
 }
 
-.save-box button {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+.user-page .save-box button {
+  background: linear-gradient(135deg, #c1a36f 0%, #b38b5b 100%);
   color: #ffffff;
   padding: 14px 40px;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
-  border-radius: 10px;
+  border-radius: 12px;
   text-transform: none;
-  letter-spacing: 0.5px;
-  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
-  transition: all 0.3s ease;
+  letter-spacing: 0.3px;
+  box-shadow: 
+    0 2px 8px rgba(193, 163, 111, 0.25),
+    0 8px 24px rgba(193, 163, 111, 0.15);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(193, 163, 111, 0.3);
+  position: relative;
+  overflow: hidden;
 }
 
-.save-box button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
-  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+.user-page .save-box button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
 }
 
-.save-box button:active {
-  transform: translateY(-1px);
+.user-page .save-box button:hover::before {
+  left: 100%;
+}
+
+.user-page .save-box button:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 4px 12px rgba(193, 163, 111, 0.35),
+    0 12px 32px rgba(193, 163, 111, 0.25);
+  border-color: rgba(193, 163, 111, 0.5);
+  background: linear-gradient(135deg, #b38b5b 0%, #a47a4d 100%);
+}
+
+.user-page .save-box button:active {
+  transform: translateY(0);
+  box-shadow: 
+    0 2px 6px rgba(193, 163, 111, 0.25),
+    0 4px 16px rgba(193, 163, 111, 0.15);
 }
 
 /* =========================================
@@ -351,81 +434,95 @@
    ========================================= */
 
 @media (max-width: 1024px) {
-  .my-page-frame {
+  .user-page .my-page-frame {
     flex-direction: column !important;
   }
 
-  .my-page-right {
+  .user-page .my-page-right {
     order: -1;
-  }
-
-  .order-info-box {
-    position: relative;
-    top: 0;
   }
 }
 
 @media (max-width: 768px) {
   .user-page {
-    padding: 20px 0;
+    padding: 40px 0;
   }
 
-  .my-page-left,
-  .order-info-box {
-    padding: 25px 20px;
+  .user-page .my-page-left,
+  .user-page .order-info-box {
+    padding: 32px 24px;
   }
 
-  .menu-name {
+  .user-page .menu-name {
     font-size: 24px;
   }
 
-  .input-frame {
+  .user-page .input-frame {
     flex-direction: column;
-    gap: 15px;
+    gap: 20px;
   }
 
-  .member-media-frame {
+  .user-page .member-media-frame {
     flex-direction: column;
     text-align: center;
   }
 
-  .mb-image {
-    width: 100px;
-    height: 100px;
+  .user-page .mb-image {
+    width: 90px;
+    height: 90px;
   }
 
-  .order-user-img {
-    width: 120px;
-    height: 120px;
+  .user-page .order-user-img {
+    width: 110px;
+    height: 110px;
   }
 }
 
 @media (max-width: 480px) {
-  .my-page-left {
-    padding: 20px 15px;
+  .user-page .my-page-left {
+    padding: 24px 20px;
+    border-radius: 20px;
   }
 
-  .order-info-box {
-    padding: 30px 20px;
+  .user-page .order-info-box {
+    padding: 36px 24px;
+    border-radius: 20px;
   }
 
-  .menu-name {
+  .user-page .menu-name {
+    font-size: 22px;
+  }
+
+  .user-page .order-user-name {
     font-size: 20px;
   }
 
-  .order-user-name {
-    font-size: 20px;
-  }
-
-  .spec-input,
-  .spec-textarea {
-    padding: 12px 15px;
+  .user-page .spec-input,
+  .user-page .spec-textarea {
+    padding: 12px 14px;
     font-size: 14px;
   }
 
-  .save-box button {
+  .user-page .save-box {
+    justify-content: stretch;
+  }
+
+  .user-page .save-box button {
     width: 100%;
-    padding: 12px 30px;
+    padding: 13px 28px;
+  }
+
+  .user-page .user-media-box {
+    gap: 10px;
+  }
+
+  .user-page .user-media-box svg {
+    font-size: 20px;
+    padding: 8px;
+  }
+
+  .user-page .my-page-frame {
+    gap: 20px;
   }
 }
 
@@ -433,7 +530,7 @@
    ANIMATIONS
    ========================================= */
 
-@keyframes fadeIn {
+@keyframes fadeInUp {
   from {
     opacity: 0;
     transform: translateY(20px);
@@ -444,33 +541,161 @@
   }
 }
 
-.my-page-left,
-.my-page-right {
-  animation: fadeIn 0.6s ease-out;
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
-.my-page-right {
+.user-page .my-page-left {
+  animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.user-page .my-page-right {
+  animation: slideInFromRight 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  animation-delay: 0.1s;
+  opacity: 0;
+  animation-fill-mode: forwards;
+}
+
+/* Stagger animation for input fields */
+.user-page .input-frame {
+  animation: fadeInUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   animation-delay: 0.2s;
+  opacity: 0;
+  animation-fill-mode: forwards;
+}
+
+.user-page .member-media-frame {
+  animation: fadeInUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  animation-delay: 0.15s;
+  opacity: 0;
+  animation-fill-mode: forwards;
 }
 
 /* =========================================
    ACCESSIBILITY
    ========================================= */
 
-.spec-input:focus-visible,
-.spec-textarea:focus-visible,
-button:focus-visible {
-  outline: 3px solid #3498db;
-  outline-offset: 2px;
+.user-page .spec-input:focus-visible,
+.user-page .spec-textarea:focus-visible,
+.user-page button:focus-visible {
+  outline: 2px solid rgba(193, 163, 111, 0.6);
+  outline-offset: 3px;
 }
 
 /* Remove spinner from number inputs */
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
+.user-page input[type="number"]::-webkit-inner-spin-button,
+.user-page input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-input[type="number"] {
+.user-page input[type="number"] {
   -moz-appearance: textfield;
+}
+
+/* =========================================
+   ADDITIONAL ENHANCEMENTS
+   ========================================= */
+
+/* Disabled state for inputs */
+.user-page .spec-input:disabled,
+.user-page .spec-textarea:disabled {
+  background-color: rgba(0, 0, 0, 0.02);
+  color: #999;
+  cursor: not-allowed;
+  border-color: rgba(193, 163, 111, 0.1);
+}
+
+/* Loading state for save button */
+.user-page .save-box button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  pointer-events: none;
+}
+
+/* Error state for inputs */
+.user-page .spec-input.error,
+.user-page .spec-textarea.error {
+  border-color: rgba(231, 76, 60, 0.5);
+  background-color: rgba(231, 76, 60, 0.03);
+}
+
+.user-page .spec-input.error:focus,
+.user-page .spec-textarea.error:focus {
+  box-shadow: 
+    0 0 0 4px rgba(231, 76, 60, 0.08),
+    0 2px 8px rgba(231, 76, 60, 0.15);
+}
+
+/* Success state for inputs */
+.user-page .spec-input.success,
+.user-page .spec-textarea.success {
+  border-color: rgba(39, 174, 96, 0.4);
+  background-color: rgba(39, 174, 96, 0.03);
+}
+
+.user-page .spec-input.success:focus,
+.user-page .spec-textarea.success:focus {
+  box-shadow: 
+    0 0 0 4px rgba(39, 174, 96, 0.08),
+    0 2px 8px rgba(39, 174, 96, 0.15);
+}
+
+/* Glassmorphism effect enhancement */
+@supports (backdrop-filter: blur(20px)) {
+  .user-page .my-page-left {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(20px);
+  }
+  
+  .user-page .order-info-box {
+    backdrop-filter: blur(20px);
+  }
+}
+
+/* Smooth transitions for all interactive elements */
+.user-page * {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Hover effect for the entire settings section */
+.user-page .settings > * {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Premium shine effect on save button */
+@keyframes shimmer {
+  0% {
+    background-position: -100% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.user-page .save-box button::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  background-size: 200% 100%;
+  animation: shimmer 3s infinite;
+  pointer-events: none;
 }

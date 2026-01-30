@@ -20,7 +20,7 @@ export default function UserPage() {
         <Stack className={"my-page-frame"}>
           <Stack className={"my-page-left"}>
             <Box display={"flex"} flexDirection={"column"}>
-              <Box className={"menu-name"}>Modify Member Details</Box>
+              <Box className={"menu-name"}>Member Details</Box>
               <Box className={"menu-content"}>
                 <Settings />
               </Box>
