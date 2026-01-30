@@ -1,0 +1,476 @@
+/* =========================================
+   USER PAGE STYLES
+   ========================================= */
+
+.user-page {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: 100vh;
+  padding: 40px 0;
+}
+
+.my-page-frame {
+  display: flex;
+  flex-direction: row !important;
+  gap: 30px;
+  margin-top: 20px;
+}
+
+/* =========================================
+   LEFT PANEL - SETTINGS
+   ========================================= */
+
+.my-page-left {
+  flex: 2;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.my-page-left:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+.menu-name {
+  font-size: 28px;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 3px solid #3498db;
+  letter-spacing: 0.5px;
+}
+
+.menu-content {
+  width: 100%;
+}
+
+/* =========================================
+   RIGHT PANEL - USER INFO
+   ========================================= */
+
+.my-page-right {
+  flex: 1;
+  min-width: 320px;
+}
+
+.order-info-box {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+  padding: 40px 30px;
+  color: #ffffff;
+  position: sticky;
+  top: 20px;
+  transition: transform 0.3s ease;
+}
+
+.order-info-box:hover {
+  transform: translateY(-5px);
+}
+
+.order-user-img {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  margin-bottom: 20px;
+}
+
+.order-user-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 5px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.order-user-avatar:hover {
+  transform: scale(1.05);
+}
+
+.order-user-icon-box {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  width: 40px;
+  height: 40px;
+  background: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.order-user-icon-box img {
+  width: 24px;
+  height: 24px;
+}
+
+.order-user-name {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.order-user-email {
+  font-size: 14px;
+  opacity: 0.9;
+  margin-bottom: 8px;
+}
+
+.order-user-prof {
+  font-size: 13px;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 6px 16px;
+  border-radius: 20px;
+  margin-bottom: 8px;
+  backdrop-filter: blur(10px);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
+.user-media-box {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin: 25px 0;
+  padding: 20px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.user-media-box svg {
+  font-size: 28px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  opacity: 0.8;
+}
+
+.user-media-box svg:hover {
+  opacity: 1;
+  transform: translateY(-3px) scale(1.1);
+}
+
+.user-desc {
+  font-size: 14px;
+  line-height: 1.6;
+  text-align: center;
+  opacity: 0.9;
+  margin: 0;
+  font-style: italic;
+}
+
+/* =========================================
+   SETTINGS SECTION
+   ========================================= */
+
+.settings {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.member-media-frame {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  padding: 25px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 12px;
+  border: 2px dashed #3498db;
+  transition: all 0.3s ease;
+}
+
+.member-media-frame:hover {
+  border-color: #2980b9;
+  box-shadow: 0 5px 15px rgba(52, 152, 219, 0.2);
+}
+
+.mb-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #3498db;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.mb-image:hover {
+  transform: scale(1.05);
+}
+
+.media-change-box {
+  flex: 1;
+}
+
+.media-change-box span {
+  font-size: 18px;
+  font-weight: 600;
+  color: #2c3e50;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.media-change-box p {
+  font-size: 13px;
+  color: #7f8c8d;
+  margin: 5px 0 15px 0;
+}
+
+.up-del-box button {
+  background: #3498db;
+  color: #ffffff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  text-transform: none;
+  font-weight: 600;
+}
+
+.up-del-box button:hover {
+  background: #2980b9;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+}
+
+.up-del-box button svg {
+  margin-right: 8px;
+}
+
+/* =========================================
+   INPUT FIELDS
+   ========================================= */
+
+.input-frame {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+}
+
+.long-input,
+.short-input {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.long-input {
+  flex: 1;
+}
+
+.short-input {
+  flex: 1;
+}
+
+.spec-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #34495e;
+  margin-bottom: 5px;
+  letter-spacing: 0.3px;
+}
+
+.spec-input,
+.spec-textarea {
+  padding: 14px 18px;
+  border: 2px solid #e0e6ed;
+  border-radius: 10px;
+  font-size: 15px;
+  color: #2c3e50;
+  transition: all 0.3s ease;
+  background: #ffffff;
+  font-family: inherit;
+}
+
+.spec-input:focus,
+.spec-textarea:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+  transform: translateY(-2px);
+}
+
+.spec-input::placeholder,
+.spec-textarea::placeholder {
+  color: #95a5a6;
+  font-style: italic;
+}
+
+.spec-textarea {
+  min-height: 120px;
+  resize: vertical;
+  font-family: inherit;
+  line-height: 1.5;
+}
+
+/* =========================================
+   SAVE BUTTON
+   ========================================= */
+
+.save-box {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.save-box button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #ffffff;
+  padding: 14px 40px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 10px;
+  text-transform: none;
+  letter-spacing: 0.5px;
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+  transition: all 0.3s ease;
+}
+
+.save-box button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+}
+
+.save-box button:active {
+  transform: translateY(-1px);
+}
+
+/* =========================================
+   RESPONSIVE DESIGN
+   ========================================= */
+
+@media (max-width: 1024px) {
+  .my-page-frame {
+    flex-direction: column !important;
+  }
+
+  .my-page-right {
+    order: -1;
+  }
+
+  .order-info-box {
+    position: relative;
+    top: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .user-page {
+    padding: 20px 0;
+  }
+
+  .my-page-left,
+  .order-info-box {
+    padding: 25px 20px;
+  }
+
+  .menu-name {
+    font-size: 24px;
+  }
+
+  .input-frame {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .member-media-frame {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .mb-image {
+    width: 100px;
+    height: 100px;
+  }
+
+  .order-user-img {
+    width: 120px;
+    height: 120px;
+  }
+}
+
+@media (max-width: 480px) {
+  .my-page-left {
+    padding: 20px 15px;
+  }
+
+  .order-info-box {
+    padding: 30px 20px;
+  }
+
+  .menu-name {
+    font-size: 20px;
+  }
+
+  .order-user-name {
+    font-size: 20px;
+  }
+
+  .spec-input,
+  .spec-textarea {
+    padding: 12px 15px;
+    font-size: 14px;
+  }
+
+  .save-box button {
+    width: 100%;
+    padding: 12px 30px;
+  }
+}
+
+/* =========================================
+   ANIMATIONS
+   ========================================= */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.my-page-left,
+.my-page-right {
+  animation: fadeIn 0.6s ease-out;
+}
+
+.my-page-right {
+  animation-delay: 0.2s;
+}
+
+/* =========================================
+   ACCESSIBILITY
+   ========================================= */
+
+.spec-input:focus-visible,
+.spec-textarea:focus-visible,
+button:focus-visible {
+  outline: 3px solid #3498db;
+  outline-offset: 2px;
+}
+
+/* Remove spinner from number inputs */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}

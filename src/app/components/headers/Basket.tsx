@@ -7,11 +7,11 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useHistory } from "react-router-dom";
-import { CartItem } from "../../../lib/data/types/search";
 import { Messages, serverApi } from "../../../lib/config";
 import { useGlobals } from "../../hooks/useGlobals";
 import { sweetErrorHandling } from "../../../lib/sweetAlert";
 import OrderService from "../../../services/OrderService";
+import { CartItem } from "../../../lib/types/search";
 
 interface BasketProps {
   cartItems: CartItem[];
@@ -49,7 +49,7 @@ export default function Basket(props: BasketProps) {
       await order.createOrder(cartItems);
 
       onDeleteAll();
-      setOrderBuilder(new Date()); // ordersPage da ishlashi uchun
+      setOrderBuilder(new Date());
       history.push("/orders");
     } catch (err) {
       console.log();
@@ -68,7 +68,12 @@ export default function Basket(props: BasketProps) {
         onClick={handleClick}
       >
         <Badge badgeContent={cartItems.length} color="secondary">
-          <img src={"/icons/shopping-cart.svg"} />
+          <img
+            src={"/icons/shopping-cart.svg"}
+            style={{
+              height: 24,
+            }}
+          />
         </Badge>
       </IconButton>
       <Menu
@@ -125,7 +130,7 @@ export default function Basket(props: BasketProps) {
           <Box className={"orders-main-wrapper"}>
             <Box className={"orders-wrapper"}>
               {cartItems.map((item: CartItem) => {
-                const ImagePath = `${serverAPi}/${item.image}`;
+                const ImagePath = `${serverApi}/${item.image}`;
                 return (
                   <Box className={"basket-info-box"} key={item._id}>
                     <div className={"cancel-btn"}>

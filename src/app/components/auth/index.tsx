@@ -6,9 +6,9 @@ import Fade from "@material-ui/core/Fade";
 import { Fab, Stack, TextField } from "@mui/material";
 import styled from "styled-components";
 import LoginIcon from "@mui/icons-material/Login";
-import { T } from "../../../lib/data/types/common";
+import { T } from "../../../lib/types/common";
 import { Messages } from "../../../lib/config";
-import { LoginInput, MemberInput } from "../../../lib/data/types/member";
+import { LoginInput, MemberInput } from "../../../lib/types/member";
 import MemberService from "../../../services/MemberService";
 import { sweetErrorHandling } from "../../../lib/sweetAlert";
 import { useGlobals } from "../../hooks/useGlobals";
@@ -50,6 +50,7 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
   const [memberNIck, setMemberNick] = useState<string>("");
   const [memberPhone, setMemberPhone] = useState<string>("");
   const [memberPassword, setMemberPassword] = useState<string>("");
+  const [memberEmail, setMemberEmail] = useState<string>("");
   const { setAuthMember } = useGlobals();
 
   /** HANDLERS **/
@@ -62,6 +63,9 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
   const handlePassword = (e: T) => {
     setMemberPassword(e.target.value);
   };
+  const handleEmail = (e: T) => {
+    setMemberEmail(e.target.value);
+  };
   const handlePasswordKeyDown = (e: T) => {
     if (e.key === "Enter" && signupOpen) {
       handleSignupRequest().then();
@@ -72,15 +76,25 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
 
   const handleSignupRequest = async () => {
     try {
-      console.log("inputs", memberNIck, memberPassword, memberPhone);
+      console.log(
+        "inputs",
+        memberNIck,
+        memberPassword,
+        memberPhone,
+        memberEmail,
+      );
       const isFullfill =
-        memberNIck !== "" && memberPhone !== "" && memberPassword !== "";
+        memberNIck !== "" &&
+        memberPhone !== "" &&
+        memberPassword !== "" &&
+        memberEmail !== "";
       if (!isFullfill) throw new Error(Messages.error3);
 
       const signupInput: MemberInput = {
         memberNick: memberNIck,
         memberPhone: memberPhone,
         memberPassword: memberPassword,
+        memberEmail: memberEmail,
       };
 
       const member = new MemberService();
@@ -151,6 +165,13 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
                 label="phone number"
                 variant="outlined"
                 onChange={handlePhone}
+              />
+              <TextField
+                sx={{ my: "17px" }}
+                id="email"
+                label="email"
+                variant="outlined"
+                onChange={handleEmail}
               />
               <TextField
                 id="outlined-basic"

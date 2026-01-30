@@ -6,7 +6,7 @@ import {
   Member,
   MemberInput,
   MemberUpdateInput,
-} from "./../lib/data/types/member";
+} from "../lib/types/member";
 
 class MemberService {
   private readonly path: string;

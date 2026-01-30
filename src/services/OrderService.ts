@@ -1,13 +1,13 @@
 import axios from "axios";
 import { serverApi } from "../lib/config";
 import { useEffect } from "react";
-import { CartItem } from "../lib/data/types/search";
+import { CartItem } from "../lib/types/search";
 import {
   Order,
   OrderInquiry,
   OrderItemInput,
   OrderUpdateInput,
-} from "../lib/data/types/order";
+} from "../lib/types/order";
 
 class OrderService {
   private readonly path: string;

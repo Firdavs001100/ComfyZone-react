@@ -1,6 +1,6 @@
 import axios from "axios";
 import { serverApi } from "../lib/config";
-import { Product, ProductInquiry } from "../lib/data/types/product";
+import { Product, ProductInquiry } from "../lib/types/product";
 
 class ProductService {
   private readonly path: string;
@@ -13,8 +13,7 @@ class ProductService {
       let url = `${this.path}/product/all?order=${input.order}&page=${input.page}&limit=${input.limit}`;
       if (input.productCategory)
         url += `&productCategory=${input.productCategory}`;
-      if (input.productType)
-        url += `&productType=${input.productType}`;
+      if (input.productType) url += `&productType=${input.productType}`;
       if (input.productProvider)
         url += `&productProvider=${input.productProvider}`;
       if (input.search) url += `&search=${input.search}`;

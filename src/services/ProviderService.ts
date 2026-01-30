@@ -1,6 +1,6 @@
 import axios from "axios";
 import { serverApi } from "../lib/config";
-import { Provider, ProviderInquiry } from "../lib/data/types/provider";
+import { Provider, ProviderInquiry } from "../lib/types/provider";
 
 class ProviderService {
   private readonly path: string;

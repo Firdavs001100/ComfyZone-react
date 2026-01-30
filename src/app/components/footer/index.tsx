@@ -1,7 +1,7 @@
 import { useState } from "react";
-import "./footer.css";
+import "../../../css/footer.css";
 
-export function Footer() {
+export default function Footer() {
   const [email, setEmail] = useState("");
 
   const handleSubscribe = () => {
