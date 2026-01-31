@@ -34,9 +34,17 @@ export default function Basket(props: BasketProps) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
+  console.log("Basket render:", { anchorEl, open, cartItems });
+
   /** HANDLERS **/
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(e.currentTarget);
+
+    // Debug log
+    console.log("Basket clicked", {
+      anchorEl: e.currentTarget,
+      open: Boolean(e.currentTarget),
+    });
   };
   const handleClose = () => {
     setAnchorEl(null);

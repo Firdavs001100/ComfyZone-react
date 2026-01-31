@@ -9,7 +9,6 @@ import {
 import PersonOffIcon from "@mui/icons-material/PersonOff";
 import SearchIcon from "@mui/icons-material/Search";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { NavLink } from "react-router-dom";
 import Basket from "./Basket";
 import { CartItem } from "../../../lib/types/search";
@@ -115,7 +114,13 @@ export default function HomeNavbar(props: HomeNavbarProps) {
               <>
                 <SearchIcon />
                 <FavoriteIcon />
-                <ShoppingCartIcon />
+                <Basket
+                  cartItems={cartItems}
+                  onAdd={onAdd}
+                  onRemove={onRemove}
+                  onDelete={onDelete}
+                  onDeleteAll={onDeleteAll}
+                />
                 <img
                   className="avatar"
                   src={

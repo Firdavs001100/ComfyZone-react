@@ -7,10 +7,10 @@ import {
   MenuItem,
   Stack,
 } from "@mui/material";
-import PersonIcon from "@mui/icons-material/Person";
+
 import SearchIcon from "@mui/icons-material/Search";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import PersonOffIcon from "@mui/icons-material/PersonOff";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { NavLink, useLocation, useParams } from "react-router-dom";
 import Basket from "./Basket";
@@ -135,7 +135,7 @@ export default function OtherNavbar(props: OtherNavbarProps) {
           <div className="nav-actions">
             {!authMember ? (
               <>
-                <PersonIcon onClick={() => setLoginOpen(true)} />
+                <PersonOffIcon onClick={() => setLoginOpen(true)} />
                 <SearchIcon />
                 <FavoriteIcon />
                 <Basket
@@ -150,7 +150,13 @@ export default function OtherNavbar(props: OtherNavbarProps) {
               <>
                 <SearchIcon />
                 <FavoriteIcon />
-                <ShoppingCartIcon />
+                <Basket
+                  cartItems={cartItems}
+                  onAdd={onAdd}
+                  onRemove={onRemove}
+                  onDelete={onDelete}
+                  onDeleteAll={onDeleteAll}
+                />
                 <img
                   className="avatar"
                   src={
