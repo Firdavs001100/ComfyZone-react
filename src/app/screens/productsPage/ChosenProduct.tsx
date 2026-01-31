@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Container, Stack, Box, Button, Rating } from "@mui/material";
+import { Container, Button, Rating } from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
@@ -25,12 +25,12 @@ const actionDispatch = (dispatch: Dispatch) => ({
   setProvider: (data: any) => dispatch(setProvider(data)),
 });
 
-const ChosenProductRetriever = createSelector(
+const chosenProductRetriever = createSelector(
   retrieveChosenProduct,
   (chosenProduct) => ({ chosenProduct }),
 );
 
-const ProviderRetriever = createSelector(retrieveProvider, (provider) => ({
+const providerRetriever = createSelector(retrieveProvider, (provider) => ({
   provider,
 }));
 
@@ -42,26 +42,20 @@ export default function ChosenProduct({ onAdd }: Props) {
   const { productId } = useParams<{ productId: string }>();
   const { setChosenProduct, setProvider } = actionDispatch(useDispatch());
 
-  const { chosenProduct } = useSelector(ChosenProductRetriever);
-  const { provider } = useSelector(ProviderRetriever);
+  const { chosenProduct } = useSelector(chosenProductRetriever);
+  const { provider } = useSelector(providerRetriever);
 
   useEffect(() => {
     const productService = new ProductService();
     const providerService = new ProviderService();
 
-    productService
-      .getProduct(productId)
-      .then((product) => {
-        setChosenProduct(product);
+    productService.getProduct(productId).then((product) => {
+      setChosenProduct(product);
 
-        if (product.productProvider) {
-          providerService
-            .getProvider(product.productProvider)
-            .then(setProvider)
-            .catch(console.error);
-        }
-      })
-      .catch(console.error);
+      if (product.productProvider) {
+        providerService.getProvider(product.productProvider).then(setProvider);
+      }
+    });
   }, [productId]);
 
   if (!chosenProduct) return null;
@@ -69,11 +63,11 @@ export default function ChosenProduct({ onAdd }: Props) {
   return (
     <div className="chosen-product">
       <Container maxWidth="lg">
-        <div className="detail-layout">
-          {/* IMAGES */}
-          <div className="gallery">
+        <div className="chosen-layout">
+          {/* LEFT – IMAGE */}
+          <div className="chosen-gallery">
             <Swiper navigation modules={[Navigation]}>
-              {chosenProduct.productImages.map((img, idx) => (
+              {chosenProduct.productImages.map((img: string, idx: number) => (
                 <SwiperSlide key={idx}>
                   <img src={`${serverApi}/${img}`} alt="product" />
                 </SwiperSlide>
@@ -81,32 +75,32 @@ export default function ChosenProduct({ onAdd }: Props) {
             </Swiper>
           </div>
 
-          {/* INFO */}
-          <div className="details">
-            <h1>{chosenProduct.productName}</h1>
+          {/* RIGHT – INFO */}
+          <div className="chosen-info">
+            <h1 className="product-title">{chosenProduct.productName}</h1>
 
-            <div className="stats">
+            <div className="meta">
               <Rating
                 value={chosenProduct.productRating}
                 precision={0.5}
                 readOnly
               />
               <span>
-                <RemoveRedEyeIcon /> {chosenProduct.productViews}
+                <RemoveRedEyeIcon fontSize="small" />
+                {chosenProduct.productViews}
               </span>
             </div>
 
-            <p className="desc">
+            <div className="product-price">
+              ${chosenProduct.productPrice.toLocaleString()}
+            </div>
+
+            <p className="product-desc">
               {chosenProduct.productDesc || "No description available."}
             </p>
 
-            <div className="price">
-              Rp {chosenProduct.productPrice.toLocaleString()}
-            </div>
-
             <Button
-              className="add-btn"
-              variant="contained"
+              className="add-to-cart-btn"
               onClick={() =>
                 onAdd({
                   _id: chosenProduct._id,
@@ -120,12 +114,11 @@ export default function ChosenProduct({ onAdd }: Props) {
               Add to Cart
             </Button>
 
-            {/* PROVIDER */}
             {provider && (
-              <div className="provider-card">
+              <div className="provider-box">
                 <strong>{provider.providerName}</strong>
-                {provider.providerDesc && <p>{provider.providerDesc}</p>}
                 <Rating value={provider.providerRating} readOnly />
+                {provider.providerDesc && <p>{provider.providerDesc}</p>}
               </div>
             )}
           </div>

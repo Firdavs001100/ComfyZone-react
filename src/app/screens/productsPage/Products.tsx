@@ -1,38 +1,42 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
-  Box,
-  Button,
-  Container,
-  InputAdornment,
   Stack,
-  TextField,
-  Badge,
+  Typography,
+  OutlinedInput,
+  InputAdornment,
+  IconButton,
+  Checkbox,
+  Slider,
   Pagination,
-  PaginationItem,
+  Menu,
+  MenuItem,
+  Button,
+  Box,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
-import { createSelector, Dispatch } from "@reduxjs/toolkit";
+import CancelRoundedIcon from "@mui/icons-material/CancelRounded";
+import RefreshIcon from "@mui/icons-material/Refresh";
+import KeyboardArrowDownRoundedIcon from "@mui/icons-material/KeyboardArrowDownRounded";
 import { useDispatch, useSelector } from "react-redux";
+import { createSelector, Dispatch } from "@reduxjs/toolkit";
 import { useHistory } from "react-router-dom";
 
-import { Product, ProductInquiry } from "../../../lib/types/product";
 import { setProducts } from "./slice";
 import { retrieveProducts } from "./selector";
 import ProductService from "../../../services/ProductService";
 import { serverApi } from "../../../lib/config";
-import { CartItem } from "../../../lib/types/search";
-import { ProductCategory, ProductType } from "../../../lib/enums/products.enum";
 
-/* REDUX */
+import { ProductType, ProductCategory } from "../../../lib/enums/products.enum";
+import { ProductInquiry } from "../../../lib/types/product";
+import { CartItem } from "../../../lib/types/search";
+
+/* ================= REDUX ================= */
+
 const actionDispatch = (dispatch: Dispatch) => ({
-  setProducts: (data: Product[]) => dispatch(setProducts(data)),
+  setProducts: (data: any[]) => dispatch(setProducts(data)),
 });
 
-const productsRetriever = createSelector(retrieveProducts, (products) => ({
+const ProductsRetriever = createSelector(retrieveProducts, (products) => ({
   products,
 }));
 
@@ -40,182 +44,354 @@ interface ProductProps {
   onAdd: (item: CartItem) => void;
 }
 
-export default function Products({ onAdd }: ProductProps) {
-  const { setProducts } = actionDispatch(useDispatch());
-  const { products } = useSelector(productsRetriever);
-  const history = useHistory();
+/* ================= COMPONENT ================= */
 
-  const [searchText, setSearchText] = useState("");
+export default function Products(props: ProductProps) {
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const { setProducts } = actionDispatch(dispatch);
+  const { products } = useSelector(ProductsRetriever);
+
+  /* ================= SEARCH STATE ================= */
+
   const [productSearch, setProductSearch] = useState<ProductInquiry>({
     page: 1,
-    limit: 8,
+    limit: 12,
     order: "createdAt",
-    productCategory: ProductCategory.LIVING_ROOM,
-    productType: ProductType.SOFA,
-    search: "",
   });
 
+  /* ================= API ================= */
+
   useEffect(() => {
-    const service = new ProductService();
-    service
+    const product = new ProductService();
+    product
       .getProducts(productSearch)
       .then((data) => setProducts(data))
       .catch(console.error);
   }, [productSearch]);
 
-  const searchHandler = () => {
+  /* ================= SORT ================= */
+
+  const [sortAnchorEl, setSortAnchorEl] = useState<null | HTMLElement>(null);
+  const [selectedSort, setSelectedSort] = useState("New");
+
+  const handleSortChange = (order: string) => {
     setProductSearch((prev) => ({
       ...prev,
       page: 1,
-      search: searchText,
+      order,
     }));
   };
 
-  const paginationHandler = (e: ChangeEvent<any>, value: number) => {
+  const handleSortSelect = (label: string, order: string) => {
+    setSelectedSort(label);
+    setSortAnchorEl(null);
+    handleSortChange(order);
+  };
+
+  /* ================= TEXT SEARCH ================= */
+
+  const [value, setValue] = useState("");
+
+  const handleClear = () => setValue("");
+  const handleReset = () => setValue("");
+
+  /* ================= CATEGORY ================= */
+
+  const ALL_CATEGORIES = Object.values(ProductCategory);
+  const [categoriesExpanded, setCategoriesExpanded] = useState(false);
+  const [selectedCategories, setSelectedCategories] = useState<
+    ProductCategory[]
+  >([]);
+
+  const visibleCategories = categoriesExpanded
+    ? ALL_CATEGORIES
+    : ALL_CATEGORIES.slice(0, 3);
+
+  const toggleCategory = (category: ProductCategory) => {
+    setSelectedCategories((prev) =>
+      prev.includes(category) ? [] : [category],
+    );
+  };
+
+  /* ================= TYPE ================= */
+
+  const ALL_TYPES: ProductType[] = [
+    ProductType.SOFA,
+    ProductType.SECTIONAL,
+    ProductType.ARMCHAIR,
+    ProductType.COFFEE_TABLE,
+    ProductType.TV_STAND,
+    ProductType.BED,
+    ProductType.WARDROBE,
+    ProductType.DINING_TABLE,
+    ProductType.DESK,
+    ProductType.BOOKSHELF,
+  ];
+
+  const [typesExpanded, setTypesExpanded] = useState(false);
+  const [selectedTypes, setSelectedTypes] = useState<ProductType[]>([]);
+
+  const visibleTypes = typesExpanded ? ALL_TYPES : ALL_TYPES.slice(0, 5);
+
+  const toggleType = (type: ProductType) => {
+    setSelectedTypes((prev) => (prev.includes(type) ? [] : [type]));
+  };
+
+  /* ================= PRICE FILTER ================= */
+
+  const [price, setPrice] = useState<number[]>([0, 5_000_000]);
+
+  const handleSliderChange = (_: Event, newValue: number | number[]) => {
+    setPrice(newValue as number[]);
+  };
+
+  const handleMinChange = (value: number) => {
+    setPrice(([_, max]) => [Math.min(value, max), max]);
+  };
+
+  const handleMaxChange = (value: number) => {
+    setPrice(([min]) => [min, Math.max(value, min)]);
+  };
+
+  const formatWon = (value: number) => value.toLocaleString("ko-KR");
+  const parseWon = (value: string) => Number(value.replace(/,/g, ""));
+
+  /* ================= COMBINED FILTER EFFECT ================= */
+
+  useEffect(() => {
     setProductSearch((prev) => ({
       ...prev,
-      page: value,
+      page: 1,
+      limit: 12,
+      search: value || undefined,
+      productCategory: selectedCategories[0],
+      productType: selectedTypes[0],
+      minPrice: price[0],
+      maxPrice: price[1],
+    }));
+  }, [value, selectedCategories, selectedTypes, price]);
+
+  /* ================= PAGINATION ================= */
+
+  const handlePageChange = (_: any, page: number) => {
+    setProductSearch((prev) => ({
+      ...prev,
+      page,
     }));
   };
 
+  /* ================= UI ================= */
+
   return (
-    <div className="product-frame">
-      <Container maxWidth="xl">
-        {/* SEARCH */}
-        <Stack className="search-title-box">
-          <TextField
-            fullWidth
-            placeholder="Search products..."
-            value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && searchHandler()}
-            size="small"
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <Button onClick={searchHandler} className="search-btn">
-                    <SearchIcon />
-                  </Button>
-                </InputAdornment>
-              ),
-            }}
-          />
-        </Stack>
+    <div className="container">
+      {/* SORT */}
+      <Stack direction="row" justifyContent="flex-end" className="sort-right">
+        <span className="sort-label">Sort by</span>
 
-        {/* TOOLBAR */}
-        <Stack className="product-toolbar">
-          <span>Showing {products.length} results</span>
+        <Button
+          className="sort-button"
+          onClick={(e) => setSortAnchorEl(e.currentTarget)}
+          endIcon={<KeyboardArrowDownRoundedIcon />}
+        >
+          {selectedSort}
+        </Button>
 
-          <Stack direction="row" spacing={1}>
-            <Button
-              onClick={() =>
-                setProductSearch({ ...productSearch, order: "createdAt" })
-              }
+        <Menu
+          anchorEl={sortAnchorEl}
+          open={Boolean(sortAnchorEl)}
+          onClose={() => setSortAnchorEl(null)}
+        >
+          <MenuItem onClick={() => handleSortSelect("New", "createdAt")}>
+            New
+          </MenuItem>
+          <MenuItem onClick={() => handleSortSelect("Popular", "views")}>
+            Popular
+          </MenuItem>
+          <MenuItem onClick={() => handleSortSelect("Price ↑", "priceAsc")}>
+            Price ↑
+          </MenuItem>
+          <MenuItem onClick={() => handleSortSelect("Price ↓", "priceDesc")}>
+            Price ↓
+          </MenuItem>
+        </Menu>
+      </Stack>
+
+      <Stack className="products-list-page" direction="row">
+        <Stack className="filter">
+          <Stack className="filter-body">
+            {/* SEARCH */}
+            <Stack className="product-section">
+              <Typography className="filter-title" color="secondary">
+                Find Your Perfect Furniture
+              </Typography>
+
+              <Stack direction="row" alignItems="center" className="input-box">
+                <SearchIcon className="search-icon" />
+
+                <OutlinedInput
+                  className="search-input"
+                  value={value}
+                  onChange={(e) => setValue(e.target.value)}
+                  placeholder="What are you looking for?"
+                  endAdornment={
+                    value && (
+                      <InputAdornment position="end">
+                        <IconButton onClick={handleClear}>
+                          <CancelRoundedIcon />
+                        </IconButton>
+                      </InputAdornment>
+                    )
+                  }
+                />
+
+                <IconButton onClick={handleReset}>
+                  <RefreshIcon />
+                </IconButton>
+              </Stack>
+            </Stack>
+
+            {/* CATEGORY */}
+            <Stack
+              className="product-section"
+              onMouseEnter={() => setCategoriesExpanded(true)}
+              onMouseLeave={() => setCategoriesExpanded(false)}
             >
-              New
-            </Button>
-            <Button
-              onClick={() =>
-                setProductSearch({ ...productSearch, order: "productPrice" })
-              }
+              <Typography className="filter-title" color="secondary">
+                Furniture Category
+              </Typography>
+
+              <Stack
+                className={`filter-list ${categoriesExpanded ? "expanded" : ""}`}
+              >
+                {visibleCategories.map((category) => (
+                  <Stack
+                    key={category}
+                    direction="row"
+                    alignItems="center"
+                    className="filter-item"
+                  >
+                    <Checkbox
+                      size="small"
+                      checked={selectedCategories.includes(category)}
+                      onChange={() => toggleCategory(category)}
+                    />
+                    <Typography className="filter-label">
+                      {category.replace(/_/g, " ")}
+                    </Typography>
+                  </Stack>
+                ))}
+              </Stack>
+            </Stack>
+
+            {/* TYPE */}
+            <Stack
+              className="product-section"
+              onMouseEnter={() => setTypesExpanded(true)}
+              onMouseLeave={() => setTypesExpanded(false)}
             >
-              Price
-            </Button>
-            <Button
-              onClick={() =>
-                setProductSearch({ ...productSearch, order: "productViews" })
-              }
-            >
-              Popular
-            </Button>
+              <Typography className="filter-title" color="secondary">
+                Furniture Type
+              </Typography>
+
+              <Stack
+                className={`filter-list ${typesExpanded ? "expanded" : ""}`}
+              >
+                {visibleTypes.map((type) => (
+                  <Stack
+                    key={type}
+                    direction="row"
+                    alignItems="center"
+                    className="filter-item"
+                  >
+                    <Checkbox
+                      size="small"
+                      checked={selectedTypes.includes(type)}
+                      onChange={() => toggleType(type)}
+                    />
+                    <Typography className="filter-label">
+                      {type.replace(/_/g, " ")}
+                    </Typography>
+                  </Stack>
+                ))}
+              </Stack>
+            </Stack>
+
+            {/* PRICE */}
+            <Stack className="product-section price-filter">
+              <Typography
+                className="filter-title"
+                color="secondary"
+                sx={{ mb: 3 }}
+              >
+                Furniture Price
+              </Typography>
+
+              <Slider
+                value={price}
+                min={0}
+                max={5_000_000}
+                onChange={handleSliderChange}
+                valueLabelDisplay="on"
+                valueLabelFormat={(v) => `₩${formatWon(v)}`}
+              />
+
+              <Stack direction="row" className="price-inputs">
+                <input
+                  type="text"
+                  value={formatWon(price[0])}
+                  onChange={(e) => handleMinChange(parseWon(e.target.value))}
+                  className="price-box"
+                />
+                <span className="price-separator">–</span>
+                <input
+                  type="text"
+                  value={formatWon(price[1])}
+                  onChange={(e) => handleMaxChange(parseWon(e.target.value))}
+                  className="price-box"
+                />
+              </Stack>
+            </Stack>
           </Stack>
         </Stack>
 
-        {/* PRODUCTS GRID */}
-        <div className="products-grid">
-          {products.map((product: Product) => {
-            const image = `${serverApi}/${product.productImages[0]}`;
-
-            return (
+        {/* PRODUCTS */}
+        <Stack className="main">
+          {!products.length ? (
+            <Box className="no-data">
+              <SearchIcon fontSize="large" />
+              <Typography variant="h6">No results found</Typography>
+              <Typography variant="body2">
+                We couldn’t find anything matching your search.
+              </Typography>
+            </Box>
+          ) : (
+            products.map((product) => (
               <div
                 key={product._id}
                 className="product-card"
                 onClick={() => history.push(`/products/${product._id}`)}
               >
-                <div
-                  className="product-image"
-                  style={{ backgroundImage: `url(${image})` }}
-                >
-                  {product.isDiscounted && (
-                    <span className="badge sale">Sale</span>
-                  )}
-
-                  <div className="overlay">
-                    <Button
-                      className="add-cart"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        onAdd({
-                          _id: product._id,
-                          name: product.productName,
-                          price: product.productPrice,
-                          quantity: 1,
-                          image: product.productImages[0],
-                        });
-                      }}
-                    >
-                      Add to cart
-                    </Button>
-                  </div>
-                </div>
-
-                <div className="product-info">
-                  <h4>{product.productName}</h4>
-
-                  <div className="price-box">
-                    <MonetizationOnIcon fontSize="small" />
-                    <span className={product.isDiscounted ? "old-price" : ""}>
-                      ${product.productPrice.toLocaleString()}
-                    </span>
-                    {product.productSalePrice && (
-                      <span className="sale-price">
-                        ${product.productSalePrice.toLocaleString()}
-                      </span>
-                    )}
-                  </div>
-
-                  <div className="views">
-                    <Badge
-                      badgeContent={product.productViews}
-                      color="secondary"
-                    >
-                      <RemoveRedEyeIcon fontSize="small" />
-                    </Badge>
-                  </div>
-                </div>
+                <img
+                  src={`${serverApi}/${product.productImages[0]}`}
+                  alt={product.productName}
+                />
+                <div>{product.productName}</div>
+                <div>₩{formatWon(product.productPrice)}</div>
               </div>
-            );
-          })}
-        </div>
+            ))
+          )}
 
-        {/* PAGINATION */}
-        <Stack className="pagination-box">
           <Pagination
             page={productSearch.page}
-            count={productSearch.page + 1}
-            onChange={paginationHandler}
-            renderItem={(item) => (
-              <PaginationItem
-                {...item}
-                components={{
-                  previous: ArrowBackIcon,
-                  next: ArrowForwardIcon,
-                }}
-              />
+            count={Math.max(
+              1,
+              Math.ceil(products.length / productSearch.limit),
             )}
+            onChange={handlePageChange}
           />
         </Stack>
-      </Container>
+      </Stack>
     </div>
   );
 }

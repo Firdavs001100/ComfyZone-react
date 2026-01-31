@@ -67,4 +67,6 @@ export interface ProductInquiry {
   productType?: ProductType;
   productProvider?: string;
   search?: string;
+   minPrice?: number;
+  maxPrice?: number;
 }

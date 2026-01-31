@@ -17,6 +17,8 @@ class ProductService {
       if (input.productProvider)
         url += `&productProvider=${input.productProvider}`;
       if (input.search) url += `&search=${input.search}`;
+      if (input.minPrice) url += `&minPrice=${input.minPrice}`;
+      if (input.maxPrice) url += `&maxPrice=${input.maxPrice}`;
 
       const result = await axios.get(url);
       console.log("getProducts: ", result);
