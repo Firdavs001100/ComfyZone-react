@@ -1,4 +1,11 @@
-import { Button, Container, ListItemIcon, Menu, MenuItem } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  ListItemIcon,
+  Menu,
+  MenuItem,
+} from "@mui/material";
 import PersonOffIcon from "@mui/icons-material/PersonOff";
 import SearchIcon from "@mui/icons-material/Search";
 import FavoriteIcon from "@mui/icons-material/Favorite";

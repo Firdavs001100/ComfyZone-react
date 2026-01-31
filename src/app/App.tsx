@@ -10,13 +10,14 @@ import OtherNavbar from "./components/headers/OtherNavbar";
 import Footer from "./components/footer";
 import useBasket from "./hooks/useBasket";
 import AuthenticationModal from "./components/auth";
-import { sweetErrorHandling, sweetTopSuccessAlert } from "../lib/sweetAlert";
+import { toastError, toastSmallSuccess } from "../lib/toastAlert";
 import { Messages } from "../lib/config";
 import MemberService from "../services/MemberService";
 import { useGlobals } from "./hooks/useGlobals";
 import "../css/app.css";
 import "../css/navbar.css";
 import "../css/footer.css";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const location = useLocation();
@@ -40,16 +41,24 @@ function App() {
     try {
       const member = new MemberService();
       await member.logout();
-      await sweetTopSuccessAlert("success", 700);
+      await toastSmallSuccess("success", 700);
       setAuthMember(null);
     } catch (err) {
       console.log(err);
-      sweetErrorHandling(Messages.error1);
+      toastError(Messages.error1);
     }
   };
 
   return (
     <>
+      <Toaster
+        position="top-right"
+        reverseOrder={false}
+        toastOptions={{
+          duration: 3000,
+          style: { fontSize: "14px", borderRadius: "8px", padding: "12px" },
+        }}
+      />
       {location.pathname == "/" ? (
         <HomeNavbar
           cartItems={cartItems}

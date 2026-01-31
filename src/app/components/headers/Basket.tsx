@@ -9,10 +9,10 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useHistory } from "react-router-dom";
 import { Messages, serverApi } from "../../../lib/config";
 import { useGlobals } from "../../hooks/useGlobals";
-import { sweetErrorHandling } from "../../../lib/sweetAlert";
+import { toastError } from "../../../lib/toastAlert";
 import OrderService from "../../../services/OrderService";
 import { CartItem } from "../../../lib/types/search";
-import "../../../css/basket.css"
+import "../../../css/basket.css";
 
 interface BasketProps {
   cartItems: CartItem[];
@@ -54,7 +54,7 @@ export default function Basket(props: BasketProps) {
       history.push("/orders");
     } catch (err) {
       console.log();
-      sweetErrorHandling(err);
+      toastError(err);
     }
   };
 

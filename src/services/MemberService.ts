@@ -38,6 +38,7 @@ class MemberService {
       return member;
     } catch (err) {
       console.log("error, signup:", err);
+      
 
       throw err;
     }

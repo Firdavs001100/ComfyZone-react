@@ -12,7 +12,7 @@ a {
 /* ================= LAYOUT ================= */
 .home-layout,
 .other-layout {
-  background: #FFFFFF;
+  background: #ffffff;
 }
 
 /* ================= NAVBAR ================= */
@@ -21,6 +21,19 @@ a {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+  display: block;
+}
+
+.avatar:hover {
+  transform: scale(1.07); 
 }
 
 /* LOGO */
