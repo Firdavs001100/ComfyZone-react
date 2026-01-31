@@ -12,6 +12,7 @@ import { useGlobals } from "../../hooks/useGlobals";
 import { sweetErrorHandling } from "../../../lib/sweetAlert";
 import OrderService from "../../../services/OrderService";
 import { CartItem } from "../../../lib/types/search";
+import "../../../css/basket.css"
 
 interface BasketProps {
   cartItems: CartItem[];
@@ -111,74 +112,64 @@ export default function Basket(props: BasketProps) {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <Stack className={"basket-frame"}>
-          <Box className={"all-check-box"}>
+        <Box className="basket-frame">
+          <Box className="all-check-box">
             {cartItems.length === 0 ? (
               <div>Cart is empty</div>
             ) : (
-              <Stack flexDirection={"row"}>
+              <Stack direction="row" alignItems="center">
                 <div>Cart Products:</div>
                 <DeleteForeverIcon
                   sx={{ ml: "5px", cursor: "pointer" }}
                   onClick={() => onDeleteAll()}
-                  color={"primary"}
+                  color="primary"
                 />
               </Stack>
             )}
           </Box>
 
-          <Box className={"orders-main-wrapper"}>
-            <Box className={"orders-wrapper"}>
+          <Box className="orders-main-wrapper">
+            <Box className="orders-wrapper">
               {cartItems.map((item: CartItem) => {
                 const ImagePath = `${serverApi}/${item.image}`;
                 return (
-                  <Box className={"basket-info-box"} key={item._id}>
-                    <div className={"cancel-btn"}>
-                      <CancelIcon
-                        onClick={() => onDelete(item)}
-                        color={"primary"}
-                      />
+                  <Box className="basket-info-box" key={item._id}>
+                    <div className="cancel-btn">
+                      <CancelIcon onClick={() => onDelete(item)} />
                     </div>
-                    <img src={ImagePath} className={"product-img"} />
-                    <span className={"product-name"}>{item.name}</span>
-                    <p className={"product-price"}>
+                    <img src={ImagePath} className="product-img" />
+                    <span className="product-name">{item.name}</span>
+                    <p className="product-price">
                       ${item.price} x {item.quantity}
                     </p>
-                    <Box sx={{ minWidth: 120 }}>
-                      <div className="col-2">
-                        <button
-                          onClick={() => onRemove(item)}
-                          className="remove"
-                        >
-                          -
-                        </button>{" "}
-                        <button onClick={() => onAdd(item)} className="add">
-                          +
-                        </button>
-                      </div>
+                    <Box className="col-2">
+                      <button onClick={() => onRemove(item)} className="remove">
+                        -
+                      </button>
+                      <button onClick={() => onAdd(item)} className="add">
+                        +
+                      </button>
                     </Box>
                   </Box>
                 );
               })}
             </Box>
           </Box>
-          {cartItems.length !== 0 ? (
-            <Box className={"basket-order"}>
-              <span className={"price"}>
+
+          {cartItems.length !== 0 && (
+            <Box className="basket-order">
+              <span className="price">
                 Total: ${totalPrice} ({itemsPrice}+{shippingCost})
               </span>
               <Button
                 onClick={proceedOrderHandler}
                 startIcon={<ShoppingCartIcon />}
-                variant={"contained"}
               >
                 Order
               </Button>
             </Box>
-          ) : (
-            ""
           )}
-        </Stack>
+        </Box>
       </Menu>
     </Box>
   );
