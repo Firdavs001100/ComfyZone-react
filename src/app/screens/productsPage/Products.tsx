@@ -17,6 +17,9 @@ import SearchIcon from "@mui/icons-material/Search";
 import CancelRoundedIcon from "@mui/icons-material/CancelRounded";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import KeyboardArrowDownRoundedIcon from "@mui/icons-material/KeyboardArrowDownRounded";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useDispatch, useSelector } from "react-redux";
 import { createSelector, Dispatch } from "@reduxjs/toolkit";
 import { useHistory } from "react-router-dom";
@@ -181,6 +184,41 @@ export default function Products(props: ProductProps) {
     }));
   };
 
+  /* ================= FAVORITES ================= */
+
+  const [favorites, setFavorites] = useState<Set<string>>(new Set());
+
+  const toggleFavorite = (e: React.MouseEvent, productId: string) => {
+    e.stopPropagation();
+    setFavorites((prev) => {
+      const newFavorites = new Set(prev);
+      if (newFavorites.has(productId)) {
+        newFavorites.delete(productId);
+      } else {
+        newFavorites.add(productId);
+      }
+      return newFavorites;
+    });
+  };
+
+  /* ================= ADD TO CART ================= */
+
+  const handleAddToCart = (e: React.MouseEvent, product: any) => {
+    e.stopPropagation();
+    const finalPrice =
+      product.isDiscounted && product.productSalePrice
+        ? product.productSalePrice
+        : product.productPrice;
+
+    props.onAdd({
+      _id: product._id,
+      quantity: 1,
+      name: product.productName,
+      price: finalPrice,
+      image: product.productImages[0],
+    });
+  };
+
   /* ================= UI ================= */
 
   return (
@@ -220,37 +258,41 @@ export default function Products(props: ProductProps) {
       <Stack className="products-list-page" direction="row">
         <Stack className="filter">
           <Stack className="filter-body">
-            {/* SEARCH */}
             <Stack className="product-section">
               <Typography className="filter-title" color="secondary">
                 Find Your Perfect Furniture
               </Typography>
-
+              {/* SEARCH */}
               <Stack direction="row" alignItems="center" className="input-box">
-                <SearchIcon className="search-icon" />
-
                 <OutlinedInput
                   className="search-input"
                   value={value}
                   onChange={(e) => setValue(e.target.value)}
-                  placeholder="What are you looking for?"
+                  placeholder="Search for furniture"
+                  startAdornment={
+                    <InputAdornment position="start">
+                      <SearchIcon />
+                    </InputAdornment>
+                  }
                   endAdornment={
-                    value && (
+                    <>
+                      {value && (
+                        <InputAdornment position="end">
+                          <IconButton onClick={handleClear}>
+                            <CancelRoundedIcon />
+                          </IconButton>
+                        </InputAdornment>
+                      )}
                       <InputAdornment position="end">
-                        <IconButton onClick={handleClear}>
-                          <CancelRoundedIcon />
+                        <IconButton onClick={handleReset}>
+                          <RefreshIcon />
                         </IconButton>
                       </InputAdornment>
-                    )
+                    </>
                   }
                 />
-
-                <IconButton onClick={handleReset}>
-                  <RefreshIcon />
-                </IconButton>
               </Stack>
             </Stack>
-
             {/* CATEGORY */}
             <Stack
               className="product-section"
@@ -356,30 +398,94 @@ export default function Products(props: ProductProps) {
         </Stack>
 
         {/* PRODUCTS */}
-        <Stack className="main">
+        <Stack className="main" direction={"row"}>
           {!products.length ? (
             <Box className="no-data">
               <SearchIcon fontSize="large" />
               <Typography variant="h6">No results found</Typography>
               <Typography variant="body2">
-                We couldn’t find anything matching your search.
+                We couldn't find anything matching your search.
               </Typography>
             </Box>
           ) : (
-            products.map((product) => (
-              <div
-                key={product._id}
-                className="product-card"
-                onClick={() => history.push(`/products/${product._id}`)}
-              >
-                <img
-                  src={`${serverApi}/${product.productImages[0]}`}
-                  alt={product.productName}
-                />
-                <div>{product.productName}</div>
-                <div>₩{formatWon(product.productPrice)}</div>
-              </div>
-            ))
+            products.map((product) => {
+              const isFavorite = favorites.has(product._id);
+
+              const isNew =
+                new Date(product.createdAt).getTime() >
+                Date.now() - 7 * 24 * 60 * 60 * 1000;
+
+              const hasDiscount =
+                product.isDiscounted &&
+                typeof product.productSalePrice === "number";
+
+              const discountPercent = hasDiscount
+                ? Math.round(
+                    ((product.productPrice - product.productSalePrice!) /
+                      product.productPrice) *
+                      100,
+                  )
+                : 0;
+
+              return (
+                <div
+                  key={product._id}
+                  className="product-card"
+                  onClick={() => history.push(`/products/${product._id}`)}
+                >
+                  {/* Badge (priority: Discount > New) */}
+                  {hasDiscount ? (
+                    <div className="product-badge">-{discountPercent}%</div>
+                  ) : (
+                    isNew && <div className="product-badge new">New</div>
+                  )}
+
+                  {/* Image */}
+                  <img
+                    src={`${serverApi}/${product.productImages[0]}`}
+                    alt={product.productName}
+                  />
+
+                  {/* Like Button */}
+                  <IconButton
+                    className="product-like"
+                    onClick={(e) => toggleFavorite(e, product._id)}
+                  >
+                    {isFavorite ? (
+                      <FavoriteIcon sx={{ color: "#ef4444" }} />
+                    ) : (
+                      <FavoriteBorderIcon />
+                    )}
+                  </IconButton>
+
+                  {/* Add to Cart Button */}
+                  <button
+                    className="product-add"
+                    onClick={(e) => handleAddToCart(e, product)}
+                  >
+                    <ShoppingCartIcon sx={{ fontSize: 18, mr: 1 }} />
+                    Add to Cart
+                  </button>
+
+                  {/* Product Info */}
+                  <div className="product-info">
+                    <div className="product-title">{product.productName}</div>
+                    <div className="product-price">
+                      {hasDiscount ? (
+                        <>
+                          ₩{formatWon(product.productSalePrice!)}
+                          <span className="product-price-original">
+                            ₩{formatWon(product.productPrice)}
+                          </span>
+                        </>
+                      ) : (
+                        `₩${formatWon(product.productPrice)}`
+                      )}
+                    </div>
+                  </div>
+                </div>
+              );
+            })
           )}
 
           <Pagination

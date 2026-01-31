@@ -12,16 +12,18 @@ export default function ProductsPage({ onAdd }: ProductPageProps) {
   const { path } = useRouteMatch();
 
   return (
-    <div className="products-page">
-      <Switch>
-        <Route exact path={path}>
-          <Products onAdd={onAdd} />
-        </Route>
+    <div style={{ background: "#fcf8f3", paddingBottom: "80px" }}>
+      <div className="products-page">
+        <Switch>
+          <Route exact path={path}>
+            <Products onAdd={onAdd} />
+          </Route>
 
-        <Route path={`${path}/:productId`}>
-          <ChosenProduct onAdd={onAdd} />
-        </Route>
-      </Switch>
+          <Route path={`${path}/:productId`}>
+            <ChosenProduct onAdd={onAdd} />
+          </Route>
+        </Switch>
+      </div>
     </div>
   );
 }
