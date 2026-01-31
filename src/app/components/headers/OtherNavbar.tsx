@@ -12,7 +12,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useParams } from "react-router-dom";
 import Basket from "./Basket";
 import { CartItem } from "../../../lib/types/search";
 import { useGlobals } from "../../hooks/useGlobals";
@@ -56,13 +56,30 @@ export default function OtherNavbar(props: OtherNavbarProps) {
   } = props;
   const location = useLocation();
 
-  // Resolve page title dynamically
+  const pathSegments = location.pathname.split("/");
+  // ["", "products", "6977144f186ea4f43452b382", "Arden-Rug"]
+
+  // last segment is the product name
+  const lastSegment = pathSegments[pathSegments.length - 1];
+  const productNameFromPath = lastSegment
+    ? decodeURIComponent(lastSegment).replace(/-/g, " ")
+    : null;
+
   const pageTitle =
-    PAGE_TITLES[location.pathname] ??
-    location.pathname
-      .replace("/", "")
-      .replace("-", " ")
-      .replace(/\b\w/g, (c) => c.toUpperCase());
+    // if on a chosen product page: /products/:id/:name
+    pathSegments[1] === "products" && pathSegments.length > 2
+      ? productNameFromPath
+      : // if on the shop page: /products
+        pathSegments[1] === "products"
+        ? "Shop"
+        : // any other static page
+          (PAGE_TITLES[location.pathname] ??
+          location.pathname
+            .split("/")
+            .filter(Boolean)
+            .map((s) => s.replace(/-/g, " "))
+            .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
+            .join(" "));
 
   const { authMember } = useGlobals();
 
@@ -169,7 +186,7 @@ export default function OtherNavbar(props: OtherNavbarProps) {
         <img
           className="page-hero__bg"
           src="/img/banner-other.jpg"
-          alt={pageTitle}
+          alt={pageTitle ?? ""}
         />
 
         <Container maxWidth="lg">
@@ -184,7 +201,19 @@ export default function OtherNavbar(props: OtherNavbarProps) {
             >
               <NavLink to="/">Home</NavLink>
               <ChevronRightIcon fontSize="small" />
-              <span>{pageTitle}</span>
+              {pathSegments[1] === "products" ? (
+                pathSegments.length > 2 ? (
+                  <>
+                    <NavLink to="/products">Shop</NavLink>
+                    <ChevronRightIcon fontSize="small" />
+                    <span>{productNameFromPath}</span>
+                  </>
+                ) : (
+                  <span>Shop</span>
+                )
+              ) : (
+                <span>{pageTitle}</span>
+              )}
             </Stack>
           </Stack>
         </Container>

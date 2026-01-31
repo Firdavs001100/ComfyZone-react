@@ -337,7 +337,13 @@ export default function ChosenProduct({ onAdd }: Props) {
               return (
                 <div
                   className="related-card"
-                  onClick={() => navigate(`/products/${product._id}`)}
+                  onClick={() =>
+                    navigate(
+                      `/products/${product._id}/${encodeURIComponent(
+                        product.productName.replace(/\s+/g, "-"),
+                      )}`,
+                    )
+                  }
                 >
                   <IconButton
                     className="related-like"

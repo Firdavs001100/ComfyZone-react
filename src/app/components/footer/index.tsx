@@ -19,9 +19,11 @@ export default function Footer() {
           <div>
             <h2 className="footer-brand">ComfyZone.</h2>
             <address className="footer-address">
-              400 University Drive Suite 200 Coral Gables,
+              88 Olympic-ro, Songpa-gu
               <br />
-              FL 33134 USA
+              Seoul 05500
+              <br />
+              South Korea
             </address>
           </div>
 

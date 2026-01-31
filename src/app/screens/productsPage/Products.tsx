@@ -431,7 +431,13 @@ export default function Products(props: ProductProps) {
                 <div
                   key={product._id}
                   className="product-card"
-                  onClick={() => history.push(`/products/${product._id}`)}
+                  onClick={() =>
+                    history.push(
+                      `/products/${product._id}/${encodeURIComponent(
+                        product.productName.replace(/\s+/g, "-"),
+                      )}`,
+                    )
+                  }
                 >
                   {/* Badge (priority: Discount > New) */}
                   {hasDiscount ? (
