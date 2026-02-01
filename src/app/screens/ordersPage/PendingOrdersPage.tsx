@@ -10,8 +10,6 @@ import {
   CardContent,
   Grid,
   Avatar,
-  IconButton,
-  Tooltip,
 } from "@mui/material";
 import { useSelector } from "react-redux";
 import { Order, OrderItem } from "../../../lib/types/order";
@@ -41,6 +39,9 @@ const statusColors: Record<
   CANCELLED: "error",
   DELETE: "error",
 };
+
+const formatPrice = (value: number) =>
+  Math.round(value).toLocaleString("ko-KR");
 
 export default function PendingOrders(props: PendingOrdersProps) {
   const pendingOrders: Order[] = useSelector(selectPendingOrders);
@@ -79,12 +80,7 @@ export default function PendingOrders(props: PendingOrdersProps) {
           component="img"
           src="/icons/noimage-list.svg"
           alt="No orders"
-          sx={{
-            width: 280,
-            height: 280,
-            opacity: 0.6,
-            mb: 3,
-          }}
+          sx={{ width: 280, height: 280, opacity: 0.6, mb: 3 }}
         />
         <Typography
           variant="h5"
@@ -112,10 +108,7 @@ export default function PendingOrders(props: PendingOrdersProps) {
           key={order._id.toString()}
           className="order-card"
           elevation={0}
-          sx={{
-            border: "1px solid",
-            borderColor: "divider",
-          }}
+          sx={{ border: "1px solid", borderColor: "divider" }}
         >
           <CardContent sx={{ p: 3, "&:last-child": { pb: 3 } }}>
             {/* ORDER HEADER */}
@@ -144,11 +137,7 @@ export default function PendingOrders(props: PendingOrdersProps) {
                 <Typography variant="caption" color="text.secondary">
                   {new Date(order.createdAt || Date.now()).toLocaleDateString(
                     "en-US",
-                    {
-                      month: "long",
-                      day: "numeric",
-                      year: "numeric",
-                    },
+                    { month: "long", day: "numeric", year: "numeric" },
                   )}
                 </Typography>
               </Box>
@@ -157,11 +146,7 @@ export default function PendingOrders(props: PendingOrdersProps) {
                 color={statusColors[order.orderStatus]}
                 variant="filled"
                 size="medium"
-                sx={{
-                  fontWeight: 600,
-                  px: 1,
-                  height: 32,
-                }}
+                sx={{ fontWeight: 600, px: 1, height: 32 }}
               />
             </Stack>
 
@@ -207,14 +192,7 @@ export default function PendingOrders(props: PendingOrdersProps) {
                       }}
                     />
                     <Stack flex={1} spacing={0.5}>
-                      <Typography
-                        fontWeight={700}
-                        sx={{
-                          fontSize: "1.05rem",
-                          color: "text.primary",
-                          mb: 0.5,
-                        }}
-                      >
+                      <Typography fontWeight={700} sx={{ fontSize: "1.05rem" }}>
                         {product.productName}
                       </Typography>
                       <Typography
@@ -254,8 +232,8 @@ export default function PendingOrders(props: PendingOrdersProps) {
                         fontWeight={500}
                         sx={{ mt: 1 }}
                       >
-                        Quantity: {item.itemQuantity} × $
-                        {item.itemPrice.toFixed(2)}
+                        Quantity: {item.itemQuantity} × ₩
+                        {formatPrice(item.itemPrice)}
                       </Typography>
                     </Stack>
                     <Typography
@@ -270,7 +248,10 @@ export default function PendingOrders(props: PendingOrdersProps) {
                         textAlign: "right",
                       }}
                     >
-                      ${(item.itemPrice * item.itemQuantity).toFixed(2)}
+                      ₩
+                      {formatPrice(
+                        item.itemPrice * item.itemQuantity,
+                      )}
                     </Typography>
                   </Box>
                 );
@@ -281,28 +262,23 @@ export default function PendingOrders(props: PendingOrdersProps) {
 
             {/* ORDER TOTALS */}
             <Stack spacing={1.5} mb={3}>
-              <Stack
-                direction="row"
-                justifyContent="space-between"
-                sx={{ px: 1 }}
-              >
+              <Stack direction="row" justifyContent="space-between" sx={{ px: 1 }}>
                 <Typography color="text.secondary" fontWeight={500}>
                   Subtotal:
                 </Typography>
                 <Typography fontWeight={600}>
-                  ${(order.orderTotal - order.orderDelivery).toFixed(2)}
+                  ₩
+                  {formatPrice(
+                    order.orderTotal - order.orderDelivery,
+                  )}
                 </Typography>
               </Stack>
-              <Stack
-                direction="row"
-                justifyContent="space-between"
-                sx={{ px: 1 }}
-              >
+              <Stack direction="row" justifyContent="space-between" sx={{ px: 1 }}>
                 <Typography color="text.secondary" fontWeight={500}>
                   Delivery Fee:
                 </Typography>
                 <Typography fontWeight={600}>
-                  ${order.orderDelivery.toFixed(2)}
+                  ₩{formatPrice(order.orderDelivery)}
                 </Typography>
               </Stack>
               <Divider sx={{ my: 0.5 }} />
@@ -329,7 +305,7 @@ export default function PendingOrders(props: PendingOrdersProps) {
                     WebkitTextFillColor: "transparent",
                   }}
                 >
-                  ${order.orderTotal.toFixed(2)}
+                  ₩{formatPrice(order.orderTotal)}
                 </Typography>
               </Stack>
             </Stack>
@@ -346,14 +322,7 @@ export default function PendingOrders(props: PendingOrdersProps) {
                   onClick={() =>
                     updateOrderStatus(order._id.toString(), OrderStatus.DELETE)
                   }
-                  sx={{
-                    py: 1.5,
-                    fontWeight: 600,
-                    borderWidth: 2,
-                    "&:hover": {
-                      borderWidth: 2,
-                    },
-                  }}
+                  sx={{ py: 1.5, fontWeight: 600, borderWidth: 2 }}
                 >
                   Cancel Order
                 </Button>
@@ -362,7 +331,6 @@ export default function PendingOrders(props: PendingOrdersProps) {
                 <Button
                   fullWidth
                   variant="contained"
-                  color="primary"
                   size="large"
                   startIcon={<PaymentIcon />}
                   onClick={() =>

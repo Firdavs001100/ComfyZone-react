@@ -22,7 +22,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useDispatch, useSelector } from "react-redux";
 import { createSelector, Dispatch } from "@reduxjs/toolkit";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 import { setProducts } from "./slice";
 import { retrieveProducts } from "./selector";
@@ -55,13 +55,28 @@ export default function Products(props: ProductProps) {
   const { setProducts } = actionDispatch(dispatch);
   const { products } = useSelector(ProductsRetriever);
 
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const categoryFromUrl = queryParams.get("category") as ProductCategory | null;
+  const searchFromUrl = queryParams.get("search") ?? "";
+
   /* ================= SEARCH STATE ================= */
 
   const [productSearch, setProductSearch] = useState<ProductInquiry>({
     page: 1,
     limit: 12,
     order: "createdAt",
+    search: searchFromUrl || undefined,
+    productCategory: categoryFromUrl ?? undefined,
   });
+
+  useEffect(() => {
+    setProductSearch((prev) => ({
+      ...prev,
+      page: 1,
+      productCategory: categoryFromUrl ?? undefined,
+    }));
+  }, [categoryFromUrl]);
 
   /* ================= API ================= */
 
@@ -94,10 +109,24 @@ export default function Products(props: ProductProps) {
 
   /* ================= TEXT SEARCH ================= */
 
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState(searchFromUrl);
 
   const handleClear = () => setValue("");
   const handleReset = () => setValue("");
+
+  useEffect(() => {
+    setValue(searchFromUrl);
+  }, [searchFromUrl]);
+
+  /* sync input → URL (typing) */
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+
+    if (value) params.set("search", value);
+    else params.delete("search");
+
+    history.replace({ search: params.toString() });
+  }, [value]);
 
   /* ================= CATEGORY ================= */
 
@@ -173,7 +202,7 @@ export default function Products(props: ProductProps) {
       minPrice: price[0],
       maxPrice: price[1],
     }));
-  }, [value, selectedCategories, selectedTypes, price]);
+  }, [value, searchFromUrl, selectedCategories, selectedTypes, price]);
 
   /* ================= PAGINATION ================= */
 

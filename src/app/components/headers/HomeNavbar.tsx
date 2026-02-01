@@ -2,19 +2,24 @@ import {
   Box,
   Button,
   Container,
+  IconButton,
   ListItemIcon,
   Menu,
   MenuItem,
 } from "@mui/material";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputAdornment from "@mui/material/InputAdornment";
 import PersonOffIcon from "@mui/icons-material/PersonOff";
 import SearchIcon from "@mui/icons-material/Search";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import Basket from "./Basket";
 import { CartItem } from "../../../lib/types/search";
 import { useGlobals } from "../../hooks/useGlobals";
 import { Logout } from "@mui/icons-material";
 import { serverApi } from "../../../lib/config";
+import { toastComingSoon } from "../../../lib/toastAlert";
+import { useState } from "react";
 
 interface HomeNavbarProps {
   cartItems: CartItem[];
@@ -47,6 +52,14 @@ export default function HomeNavbar(props: HomeNavbarProps) {
 
   const { authMember } = useGlobals();
 
+  const history = useHistory();
+  const [search, setSearch] = useState("");
+
+  const handleSearch = () => {
+    if (!search.trim()) return;
+    history.push(`/products?search=${encodeURIComponent(search)}`);
+  };
+
   return (
     <header className="home-layout">
       {/* ================= NAVBAR ================= */}
@@ -61,6 +74,11 @@ export default function HomeNavbar(props: HomeNavbarProps) {
             <li>
               <NavLink exact to="/" activeClassName="active">
                 Home
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/about" activeClassName="active">
+                About
               </NavLink>
             </li>
             <li>
@@ -82,13 +100,6 @@ export default function HomeNavbar(props: HomeNavbarProps) {
                 </NavLink>
               </li>
             )}
-            {!authMember && (
-              <li>
-                <NavLink to="/about" activeClassName="active">
-                  About
-                </NavLink>
-              </li>
-            )}
             <li>
               <NavLink to="/help" activeClassName="active">
                 Help
@@ -97,11 +108,27 @@ export default function HomeNavbar(props: HomeNavbarProps) {
           </ul>
 
           <div className="nav-actions">
+            <div className="navbar-search">
+              <OutlinedInput
+                className="navbar-search-input"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search furniture"
+                endAdornment={
+                  <InputAdornment position="end">
+                    <SearchIcon />
+                  </InputAdornment>
+                }
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") handleSearch();
+                }}
+              />
+            </div>
+
             {!authMember ? (
               <>
                 <PersonOffIcon onClick={() => setLoginOpen(true)} />
-                <SearchIcon />
-                <FavoriteIcon />
+                <FavoriteIcon onClick={() => toastComingSoon("Coming soon!")} />
                 <Basket
                   cartItems={cartItems}
                   onAdd={onAdd}
@@ -112,8 +139,7 @@ export default function HomeNavbar(props: HomeNavbarProps) {
               </>
             ) : (
               <>
-                <SearchIcon />
-                <FavoriteIcon />
+                <FavoriteIcon onClick={() => toastComingSoon("Coming soon!")} />
                 <Basket
                   cartItems={cartItems}
                   onAdd={onAdd}
@@ -163,11 +189,15 @@ export default function HomeNavbar(props: HomeNavbarProps) {
             New Collection
           </h1>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit
-            tellus, luctus nec ullamcorper mattis.
+            Explore our latest furniture collection designed for comfort, style,
+            and functionality. From living room sofas to elegant dining sets,
+            find pieces that transform your home into a cozy, modern space.
           </p>
 
-          <Button className="cta" onClick={() => setSignupOpen(true)}>
+          <Button
+            className="cta"
+            onClick={() => window.location.assign("/products")}
+          >
             BUY NOW
           </Button>
         </div>

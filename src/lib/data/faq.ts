@@ -1,11 +1,11 @@
 export const faq = [
 	{
 		question: 'How to make order?',
-		answer: 'You should choose products and make an order via basket!',
+		answer: 'You should choose products and make an order through your shopping cart!',
 	},
 	{
 		question: 'How long does delivery takes?',
-		answer: 'It depends on your location. The max delivery time is 1 hour!',
+		answer: 'It depends on your location. The average delivery time is 1 day to 1 week!',
 	},
 	{
 		question: 'Is our details secure in this platform?',

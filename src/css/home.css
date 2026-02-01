@@ -398,7 +398,9 @@
 .swiper-pagination-bullet-active {
   background: #c1a36f;
   transform: scale(1.2);
-} /* ================= FURNITURE SHOWCASE ================= */
+} 
+
+/* ================= FURNITURE SHOWCASE ================= */
 .furniture-showcase {
   width: 100vw;
   padding: 80px 0;

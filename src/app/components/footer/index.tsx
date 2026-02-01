@@ -31,16 +31,16 @@ export default function Footer() {
           <div>
             <h3 className="footer-section-title">Links</h3>
             <nav className="footer-nav">
-              <a href="#home" className="footer-link">
+              <a href="/home" className="footer-link">
                 Home
               </a>
-              <a href="#shop" className="footer-link">
+              <a href="/shop" className="footer-link">
                 Shop
               </a>
-              <a href="#about" className="footer-link">
+              <a href="/about" className="footer-link">
                 About
               </a>
-              <a href="#contact" className="footer-link">
+              <a href="/help?tab=contact" className="footer-link">
                 Contact
               </a>
             </nav>
@@ -50,14 +50,14 @@ export default function Footer() {
           <div>
             <h3 className="footer-section-title">Help</h3>
             <nav className="footer-nav">
-              <a href="#payment" className="footer-link">
-                Payment Options
+              <a href="/help" className="footer-link">
+                Terms
               </a>
-              <a href="#returns" className="footer-link">
-                Returns
+              <a href="/help?tab=faq" className="footer-link">
+                Guide
               </a>
-              <a href="#privacy" className="footer-link">
-                Privacy Policies
+              <a href="/help?tab=faq" className="footer-link">
+                FAQ
               </a>
             </nav>
           </div>

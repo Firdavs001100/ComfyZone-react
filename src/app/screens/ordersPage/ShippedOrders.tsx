@@ -28,6 +28,9 @@ const statusColors: Record<
   DELETE: "error",
 };
 
+const formatPrice = (value: number) =>
+  Math.round(value).toLocaleString("ko-KR");
+
 export default function ShippedOrdersTab() {
   const shippedOrders: Order[] = useSelector(selectShippedOrders);
 
@@ -202,8 +205,8 @@ export default function ShippedOrdersTab() {
                         fontWeight={500}
                         sx={{ mt: 1 }}
                       >
-                        Quantity: {item.itemQuantity} × $
-                        {item.itemPrice.toFixed(2)}
+                        Quantity: {item.itemQuantity} × ₩
+                        {formatPrice(item.itemPrice)}
                       </Typography>
                     </Stack>
                     <Typography
@@ -218,7 +221,7 @@ export default function ShippedOrdersTab() {
                         textAlign: "right",
                       }}
                     >
-                      ${(item.itemPrice * item.itemQuantity).toFixed(2)}
+                      ₩{formatPrice(item.itemPrice * item.itemQuantity)}
                     </Typography>
                   </Box>
                 );
@@ -238,7 +241,7 @@ export default function ShippedOrdersTab() {
                   Subtotal:
                 </Typography>
                 <Typography fontWeight={600}>
-                  ${(order.orderTotal - order.orderDelivery).toFixed(2)}
+                  ₩{formatPrice(order.orderTotal - order.orderDelivery)}
                 </Typography>
               </Stack>
               <Stack
@@ -250,7 +253,7 @@ export default function ShippedOrdersTab() {
                   Delivery Fee:
                 </Typography>
                 <Typography fontWeight={600}>
-                  ${order.orderDelivery.toFixed(2)}
+                  ₩{formatPrice(order.orderDelivery)}
                 </Typography>
               </Stack>
               <Divider sx={{ my: 0.5 }} />
@@ -277,7 +280,7 @@ export default function ShippedOrdersTab() {
                     WebkitTextFillColor: "transparent",
                   }}
                 >
-                  ${order.orderTotal.toFixed(2)}
+                  ₩{formatPrice(order.orderTotal)}
                 </Typography>
               </Stack>
             </Stack>

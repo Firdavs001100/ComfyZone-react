@@ -8,6 +8,7 @@ export default function ProductRange() {
 
   const goToCategory = (category: ProductCategory) => {
     history.push(`/products?category=${category}`);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (

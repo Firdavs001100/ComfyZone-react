@@ -33,7 +33,7 @@ a {
 }
 
 .avatar:hover {
-  transform: scale(1.07); 
+  transform: scale(1.07);
 }
 
 /* LOGO */
@@ -99,22 +99,63 @@ a {
   align-items: center;
 }
 
-.nav-actions svg {
-  cursor: pointer;
-  transition: color 0.2s ease;
+.navbar-search {
+  position: relative;
+  width: 40px;
+  transition: width 0.9s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.nav-actions svg:hover {
-  color: #b88e2f;
+.navbar-search:hover,
+.navbar-search:focus-within {
+  width: 220px;
 }
 
-.avatar {
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  cursor: pointer;
-  object-fit: cover;
+.navbar-search .MuiOutlinedInput-root {
+  height: 40px;
+  border-radius: 999px;
+  background: transparent;
+  padding-right: 6px;
 }
+
+.navbar-search .MuiOutlinedInput-notchedOutline {
+  border: none;
+}
+
+.navbar-search:hover .MuiOutlinedInput-notchedOutline,
+.navbar-search
+  .MuiOutlinedInput-root.Mui-focused
+  .MuiOutlinedInput-notchedOutline {
+  border: 2px solid #d6c6a8;
+  transition: border 0.7s ease;
+}
+
+.navbar-search:not(:hover):not(:focus-within)
+  .MuiOutlinedInput-input {
+  opacity: 0;
+  cursor: pointer;
+}
+
+.navbar-search .MuiOutlinedInput-input {
+  font-size: 18px;
+  color: #555;
+  transition: opacity 0.7s ease;
+}
+
+.navbar-search .MuiOutlinedInput-input::placeholder {
+  color: #999;
+  opacity: 1;
+}
+
+.navbar-search .MuiInputAdornment-root svg {
+  color: #666;
+  transition: color 0.7s ease;
+}
+
+.navbar-search:hover .MuiInputAdornment-root svg,
+.navbar-search:focus-within .MuiInputAdornment-root svg {
+  color: #d6c6a8;
+}
+
 
 /* ================= HERO ================= */
 .hero {

@@ -21,6 +21,10 @@ interface BasketProps {
   onDelete: (item: CartItem) => void;
   onDeleteAll: () => void;
 }
+
+// ✅ KRW formatter
+const krw = new Intl.NumberFormat("ko-KR");
+
 export default function Basket(props: BasketProps) {
   const { cartItems, onAdd, onDelete, onDeleteAll, onRemove } = props;
   const { authMember, setOrderBuilder } = useGlobals();
@@ -30,7 +34,7 @@ export default function Basket(props: BasketProps) {
     0,
   );
   const shippingCost: number = itemsPrice < 100 ? 5 : 0;
-  const totalPrice = (itemsPrice + shippingCost).toFixed(1);
+  const totalPrice = itemsPrice + shippingCost;
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -39,8 +43,6 @@ export default function Basket(props: BasketProps) {
   /** HANDLERS **/
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(e.currentTarget);
-
-    // Debug log
     console.log("Basket clicked", {
       anchorEl: e.currentTarget,
       open: Boolean(e.currentTarget),
@@ -90,7 +92,6 @@ export default function Basket(props: BasketProps) {
         id="account-menu"
         open={open}
         onClose={handleClose}
-        // onClick={handleClose}
         PaperProps={{
           elevation: 0,
           sx: {
@@ -148,7 +149,7 @@ export default function Basket(props: BasketProps) {
                     <img src={ImagePath} className="product-img" />
                     <span className="product-name">{item.name}</span>
                     <p className="product-price">
-                      ${item.price} x {item.quantity}
+                      ₩{krw.format(item.price)} x {item.quantity}
                     </p>
                     <Box className="col-2">
                       <button onClick={() => onRemove(item)} className="remove">
@@ -167,7 +168,8 @@ export default function Basket(props: BasketProps) {
           {cartItems.length !== 0 && (
             <Box className="basket-order">
               <span className="price">
-                Total: ${totalPrice} ({itemsPrice}+{shippingCost})
+                Total: ₩{krw.format(totalPrice)} (₩{krw.format(itemsPrice)}+
+                ₩{krw.format(shippingCost)})
               </span>
               <Button
                 onClick={proceedOrderHandler}

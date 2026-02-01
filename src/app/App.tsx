@@ -18,6 +18,7 @@ import { Toaster } from "react-hot-toast";
 import "../css/app.css";
 import "../css/navbar.css";
 import "../css/footer.css";
+import AboutPage from "./screens/aboutPage";
 
 function App() {
   const location = useLocation();
@@ -52,7 +53,7 @@ function App() {
   return (
     <>
       <Toaster
-        position="top-right"
+        position="top-center"
         reverseOrder={false}
         toastOptions={{
           duration: 3000,
@@ -97,6 +98,9 @@ function App() {
         </Route>
         <Route path="/orders">
           <OrdersPage />
+        </Route>
+        <Route path="/about">
+          <AboutPage />
         </Route>
         <Route path="/help">
           <HelpPage />

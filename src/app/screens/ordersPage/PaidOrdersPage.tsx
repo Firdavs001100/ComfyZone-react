@@ -35,6 +35,9 @@ const statusColors: Record<
   DELETE: "error",
 };
 
+// ✅ KRW formatter (no decimals, Korean style)
+const krw = new Intl.NumberFormat("ko-KR");
+
 export default function PaidOrdersTab() {
   const paidOrders: Order[] = useSelector(selectPaidOrders);
   const { authMember, setOrderBuilder } = useGlobals();
@@ -72,19 +75,10 @@ export default function PaidOrdersTab() {
           alt="No orders"
           sx={{ width: 280, height: 280, opacity: 0.6, mb: 3 }}
         />
-        <Typography
-          variant="h5"
-          color="text.secondary"
-          fontWeight={600}
-          sx={{ mb: 1 }}
-        >
+        <Typography variant="h5" color="text.secondary" fontWeight={600} mb={1}>
           No Paid Orders
         </Typography>
-        <Typography
-          variant="body2"
-          color="text.secondary"
-          sx={{ opacity: 0.7 }}
-        >
+        <Typography variant="body2" color="text.secondary" sx={{ opacity: 0.7 }}>
           Your paid orders will appear here
         </Typography>
       </Box>
@@ -96,11 +90,10 @@ export default function PaidOrdersTab() {
       {paidOrders.map((order) => (
         <Card
           key={order._id.toString()}
-          className="order-card"
           elevation={0}
           sx={{ border: "1px solid", borderColor: "divider" }}
         >
-          <CardContent sx={{ p: 3, "&:last-child": { pb: 3 } }}>
+          <CardContent sx={{ p: 3 }}>
             {/* ORDER HEADER */}
             <Stack
               direction={{ xs: "column", sm: "row" }}
@@ -113,13 +106,9 @@ export default function PaidOrdersTab() {
                 <Typography
                   variant="subtitle1"
                   fontWeight={700}
-                  sx={{
-                    color: "text.primary",
-                    mb: 0.5,
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 1,
-                  }}
+                  display="flex"
+                  alignItems="center"
+                  gap={1}
                 >
                   <LocalShippingIcon sx={{ fontSize: 20 }} />
                   Order #{order._id.toString().slice(-8).toUpperCase()}
@@ -127,20 +116,14 @@ export default function PaidOrdersTab() {
                 <Typography variant="caption" color="text.secondary">
                   {new Date(order.createdAt || Date.now()).toLocaleDateString(
                     "en-US",
-                    {
-                      month: "long",
-                      day: "numeric",
-                      year: "numeric",
-                    },
+                    { month: "long", day: "numeric", year: "numeric" },
                   )}
                 </Typography>
               </Box>
               <Chip
                 label={order.orderStatus}
                 color={statusColors[order.orderStatus]}
-                variant="filled"
-                size="medium"
-                sx={{ fontWeight: 600, px: 1, height: 32 }}
+                sx={{ fontWeight: 600, height: 32 }}
               />
             </Stack>
 
@@ -159,97 +142,68 @@ export default function PaidOrdersTab() {
                 return (
                   <Box
                     key={item._id.toString()}
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 2.5,
-                      p: 2,
-                      borderRadius: 2,
-                      bgcolor: "rgba(0, 0, 0, 0.02)",
-                      transition: "all 0.2s",
-                      "&:hover": {
-                        bgcolor: "rgba(0, 0, 0, 0.04)",
-                        transform: "translateX(4px)",
-                      },
-                    }}
+                    display="flex"
+                    alignItems="center"
+                    gap={2.5}
+                    p={2}
+                    borderRadius={2}
+                    bgcolor="rgba(0,0,0,0.02)"
                   >
                     <Avatar
                       src={imageSrc}
-                      alt={product.productName}
                       variant="rounded"
                       sx={{
                         width: 90,
                         height: 90,
                         border: "2px solid",
                         borderColor: "divider",
-                        boxShadow: 1,
                       }}
                     />
+
                     <Stack flex={1} spacing={0.5}>
-                      <Typography
-                        fontWeight={700}
-                        sx={{
-                          fontSize: "1.05rem",
-                          color: "text.primary",
-                          mb: 0.5,
-                        }}
-                      >
+                      <Typography fontWeight={700}>
                         {product.productName}
                       </Typography>
-                      <Typography
-                        fontSize={13}
-                        color="text.secondary"
-                        sx={{
-                          display: "flex",
-                          alignItems: "center",
-                          gap: 1,
-                          flexWrap: "wrap",
-                        }}
-                      >
+
+                      <Stack direction="row" gap={1} flexWrap="wrap">
                         <Chip
                           label={product.productCategory}
                           size="small"
                           variant="outlined"
-                          sx={{ height: 22, fontSize: "0.75rem" }}
                         />
                         <Chip
                           label={product.productType}
                           size="small"
                           variant="outlined"
-                          sx={{ height: 22, fontSize: "0.75rem" }}
                         />
                         {product.productColor && (
                           <Chip
                             label={product.productColor}
                             size="small"
                             variant="outlined"
-                            sx={{ height: 22, fontSize: "0.75rem" }}
                           />
                         )}
-                      </Typography>
-                      <Typography
-                        fontSize={14}
-                        color="text.secondary"
-                        fontWeight={500}
-                        sx={{ mt: 1 }}
-                      >
-                        Quantity: {item.itemQuantity} × $
-                        {item.itemPrice.toFixed(2)}
+                      </Stack>
+
+                      <Typography fontSize={14} color="text.secondary" mt={1}>
+                        Quantity: {item.itemQuantity} × ₩
+                        {krw.format(item.itemPrice)}
                       </Typography>
                     </Stack>
+
                     <Typography
                       fontWeight={700}
+                      fontSize="1.2rem"
+                      textAlign="right"
                       sx={{
-                        fontSize: "1.2rem",
                         background:
-                          "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                          "linear-gradient(135deg,#667eea,#764ba2)",
                         WebkitBackgroundClip: "text",
                         WebkitTextFillColor: "transparent",
-                        minWidth: "80px",
-                        textAlign: "right",
+                        minWidth: 90,
                       }}
                     >
-                      ${(item.itemPrice * item.itemQuantity).toFixed(2)}
+                      ₩{krw.format(item.itemPrice * item.itemQuantity)}
                     </Typography>
                   </Box>
                 );
@@ -258,82 +212,59 @@ export default function PaidOrdersTab() {
 
             <Divider sx={{ mb: 3 }} />
 
-            {/* ORDER TOTALS */}
+            {/* TOTALS */}
             <Stack spacing={1.5} mb={3}>
-              <Stack
-                direction="row"
-                justifyContent="space-between"
-                sx={{ px: 1 }}
-              >
-                <Typography color="text.secondary" fontWeight={500}>
-                  Subtotal:
-                </Typography>
+              <Stack direction="row" justifyContent="space-between">
+                <Typography color="text.secondary">Subtotal:</Typography>
                 <Typography fontWeight={600}>
-                  ${(order.orderTotal - order.orderDelivery).toFixed(2)}
+                  ₩{krw.format(order.orderTotal - order.orderDelivery)}
                 </Typography>
               </Stack>
-              <Stack
-                direction="row"
-                justifyContent="space-between"
-                sx={{ px: 1 }}
-              >
-                <Typography color="text.secondary" fontWeight={500}>
-                  Delivery Fee:
-                </Typography>
+
+              <Stack direction="row" justifyContent="space-between">
+                <Typography color="text.secondary">Delivery Fee:</Typography>
                 <Typography fontWeight={600}>
-                  ${order.orderDelivery.toFixed(2)}
+                  ₩{krw.format(order.orderDelivery)}
                 </Typography>
               </Stack>
-              <Divider sx={{ my: 0.5 }} />
+
+              <Divider />
+
               <Stack
                 direction="row"
                 justifyContent="space-between"
-                sx={{
-                  px: 1,
-                  py: 1,
-                  bgcolor: "rgba(102, 126, 234, 0.05)",
-                  borderRadius: 1,
-                }}
+                p={1}
+                borderRadius={1}
+                bgcolor="rgba(102,126,234,0.05)"
               >
-                <Typography fontWeight={700} sx={{ fontSize: "1.1rem" }}>
-                  Total Amount:
-                </Typography>
+                <Typography fontWeight={700}>Total Amount:</Typography>
                 <Typography
                   fontWeight={800}
+                  fontSize="1.25rem"
                   sx={{
-                    fontSize: "1.25rem",
                     background:
-                      "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                      "linear-gradient(135deg,#667eea,#764ba2)",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
                   }}
                 >
-                  ${order.orderTotal.toFixed(2)}
+                  ₩{krw.format(order.orderTotal)}
                 </Typography>
               </Stack>
             </Stack>
 
-            {/* CANCEL BUTTON ONLY */}
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <Button
-                  fullWidth
-                  variant="outlined"
-                  color="error"
-                  size="large"
-                  startIcon={<DeleteOutlineIcon />}
-                  onClick={() => cancelOrder(order._id.toString())}
-                  sx={{
-                    py: 1.5,
-                    fontWeight: 600,
-                    borderWidth: 2,
-                    "&:hover": { borderWidth: 2 },
-                  }}
-                >
-                  Cancel Order
-                </Button>
-              </Grid>
-            </Grid>
+            {/* CANCEL */}
+            <Button
+              fullWidth
+              variant="outlined"
+              color="error"
+              size="large"
+              startIcon={<DeleteOutlineIcon />}
+              onClick={() => cancelOrder(order._id.toString())}
+              sx={{ py: 1.5, fontWeight: 600, borderWidth: 2 }}
+            >
+              Cancel Order
+            </Button>
           </CardContent>
         </Card>
       ))}

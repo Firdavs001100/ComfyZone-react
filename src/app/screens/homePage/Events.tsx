@@ -97,16 +97,6 @@ export default function FurnitureEvents() {
             </SwiperSlide>
           ))}
         </Swiper>
-
-        <Box className="prev-next-frame">
-          <img src="/icons/arrow-right.svg" className="swiper-button-prev" />
-          <div className="dot-frame-pagination swiper-pagination"></div>
-          <img
-            src="/icons/arrow-right.svg"
-            className="swiper-button-next"
-            style={{ transform: "rotate(-180deg)" }}
-          />
-        </Box>
       </Stack>
     </div>
   );

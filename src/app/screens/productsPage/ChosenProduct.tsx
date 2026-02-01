@@ -252,12 +252,13 @@ export default function ChosenProduct({ onAdd }: Props) {
                   src={`${serverApi}/${provider.providerLogo}`}
                   alt={provider.providerName}
                 />
-                <div>
+                <div className="provider-row">
                   <strong>{provider.providerName}</strong>
                   <Rating
                     value={provider.providerRating || 0}
                     readOnly
                     size="small"
+                    className="stars-rating"
                   />
                 </div>
               </div>

@@ -2,22 +2,26 @@ import {
   Box,
   Button,
   Container,
+  IconButton,
   ListItemIcon,
   Menu,
   MenuItem,
   Stack,
 } from "@mui/material";
-
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputAdornment from "@mui/material/InputAdornment";
 import SearchIcon from "@mui/icons-material/Search";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import PersonOffIcon from "@mui/icons-material/PersonOff";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import { NavLink, useLocation, useParams } from "react-router-dom";
+import { NavLink, useHistory, useLocation, useParams } from "react-router-dom";
 import Basket from "./Basket";
 import { CartItem } from "../../../lib/types/search";
 import { useGlobals } from "../../hooks/useGlobals";
 import { Logout } from "@mui/icons-material";
 import { serverApi } from "../../../lib/config";
+import { toastComingSoon } from "../../../lib/toastAlert";
+import { useState } from "react";
 
 interface OtherNavbarProps {
   cartItems: CartItem[];
@@ -83,6 +87,14 @@ export default function OtherNavbar(props: OtherNavbarProps) {
 
   const { authMember } = useGlobals();
 
+  const history = useHistory();
+  const [search, setSearch] = useState("");
+
+  const handleSearch = () => {
+    if (!search.trim()) return;
+    history.push(`/products?search=${encodeURIComponent(search)}`);
+  };
+
   return (
     <header className="other-layout">
       {/* ================= NAVBAR ================= */}
@@ -97,6 +109,11 @@ export default function OtherNavbar(props: OtherNavbarProps) {
             <li>
               <NavLink exact to="/" activeClassName="active">
                 Home
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/about" activeClassName="active">
+                About
               </NavLink>
             </li>
             <li>
@@ -118,13 +135,6 @@ export default function OtherNavbar(props: OtherNavbarProps) {
                 </NavLink>
               </li>
             )}
-            {!authMember && (
-              <li>
-                <NavLink to="/about" activeClassName="active">
-                  About
-                </NavLink>
-              </li>
-            )}
             <li>
               <NavLink to="/help" activeClassName="active">
                 Help
@@ -133,11 +143,26 @@ export default function OtherNavbar(props: OtherNavbarProps) {
           </ul>
 
           <div className="nav-actions">
+            <div className="navbar-search">
+              <OutlinedInput
+                className="navbar-search-input"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search furniture"
+                endAdornment={
+                  <InputAdornment position="end">
+                    <SearchIcon />
+                  </InputAdornment>
+                }
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") handleSearch();
+                }}
+              />
+            </div>
             {!authMember ? (
               <>
                 <PersonOffIcon onClick={() => setLoginOpen(true)} />
-                <SearchIcon />
-                <FavoriteIcon />
+                <FavoriteIcon onClick={() => toastComingSoon("Coming soon!")} />
                 <Basket
                   cartItems={cartItems}
                   onAdd={onAdd}
@@ -148,8 +173,7 @@ export default function OtherNavbar(props: OtherNavbarProps) {
               </>
             ) : (
               <>
-                <SearchIcon />
-                <FavoriteIcon />
+                <FavoriteIcon onClick={() => toastComingSoon("Coming soon!")} />
                 <Basket
                   cartItems={cartItems}
                   onAdd={onAdd}

@@ -28,6 +28,9 @@ const statusColors: Record<
   DELETE: "error",
 };
 
+// ✅ KRW formatter (no decimals, commas)
+const krw = new Intl.NumberFormat("ko-KR");
+
 export default function CancelledOrdersTab() {
   const cancelledOrders: Order[] = useSelector(selectCancelledOrders);
 
@@ -154,6 +157,7 @@ export default function CancelledOrdersTab() {
                         boxShadow: 1,
                       }}
                     />
+
                     <Stack flex={1} spacing={0.5}>
                       <Typography
                         fontWeight={700}
@@ -165,6 +169,7 @@ export default function CancelledOrdersTab() {
                       >
                         {product.productName}
                       </Typography>
+
                       <Typography
                         fontSize={13}
                         color="text.secondary"
@@ -196,16 +201,18 @@ export default function CancelledOrdersTab() {
                           />
                         )}
                       </Typography>
+
                       <Typography
                         fontSize={14}
                         color="text.secondary"
                         fontWeight={500}
                         sx={{ mt: 1 }}
                       >
-                        Quantity: {item.itemQuantity} × $
-                        {item.itemPrice.toFixed(2)}
+                        Quantity: {item.itemQuantity} × ₩
+                        {krw.format(item.itemPrice)}
                       </Typography>
                     </Stack>
+
                     <Typography
                       fontWeight={700}
                       sx={{
@@ -218,7 +225,7 @@ export default function CancelledOrdersTab() {
                         textAlign: "right",
                       }}
                     >
-                      ${(item.itemPrice * item.itemQuantity).toFixed(2)}
+                      ₩{krw.format(item.itemPrice * item.itemQuantity)}
                     </Typography>
                   </Box>
                 );
@@ -229,31 +236,26 @@ export default function CancelledOrdersTab() {
 
             {/* ORDER TOTALS */}
             <Stack spacing={1.5}>
-              <Stack
-                direction="row"
-                justifyContent="space-between"
-                sx={{ px: 1 }}
-              >
+              <Stack direction="row" justifyContent="space-between" sx={{ px: 1 }}>
                 <Typography color="text.secondary" fontWeight={500}>
                   Subtotal:
                 </Typography>
                 <Typography fontWeight={600}>
-                  ${(order.orderTotal - order.orderDelivery).toFixed(2)}
+                  ₩{krw.format(order.orderTotal - order.orderDelivery)}
                 </Typography>
               </Stack>
-              <Stack
-                direction="row"
-                justifyContent="space-between"
-                sx={{ px: 1 }}
-              >
+
+              <Stack direction="row" justifyContent="space-between" sx={{ px: 1 }}>
                 <Typography color="text.secondary" fontWeight={500}>
                   Delivery Fee:
                 </Typography>
                 <Typography fontWeight={600}>
-                  ${order.orderDelivery.toFixed(2)}
+                  ₩{krw.format(order.orderDelivery)}
                 </Typography>
               </Stack>
+
               <Divider sx={{ my: 0.5 }} />
+
               <Stack
                 direction="row"
                 justifyContent="space-between"
@@ -277,7 +279,7 @@ export default function CancelledOrdersTab() {
                     WebkitTextFillColor: "transparent",
                   }}
                 >
-                  ${order.orderTotal.toFixed(2)}
+                  ₩{krw.format(order.orderTotal)}
                 </Typography>
               </Stack>
             </Stack>
