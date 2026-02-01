@@ -338,6 +338,7 @@ export default function ChosenProduct({ onAdd }: Props) {
               return (
                 <div
                   className="related-card"
+                  key={product._id}
                   onClick={() =>
                     navigate(
                       `/products/${product._id}/${encodeURIComponent(
