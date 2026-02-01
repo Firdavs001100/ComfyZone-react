@@ -43,7 +43,11 @@ function App() {
       const member = new MemberService();
       await member.logout();
       await toastSmallSuccess("success", 700);
+
+      // Clear auth
       setAuthMember(null);
+
+      handleCloseLogout();
     } catch (err) {
       console.log(err);
       toastError(Messages.error1);

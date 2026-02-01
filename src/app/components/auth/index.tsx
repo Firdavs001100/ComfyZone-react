@@ -53,7 +53,7 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
   const [memberEmail, setMemberEmail] = useState<string>("");
   const { setAuthMember } = useGlobals();
 
-  // Determine which modal is open and set active tab
+  // Sync tab with whichever prop opened the modal
   useEffect(() => {
     if (signupOpen) {
       setActiveTab("signup");
@@ -62,75 +62,52 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
     }
   }, [signupOpen, loginOpen]);
 
-  // Get the correct close handler based on active tab
-  const getCloseHandler = () => {
-    return activeTab === "signup" ? handleSignupClose : handleLoginClose;
+  /** LOGIC HANDLERS **/
+
+  const handleCloseAll = () => {
+    // Reset local state
+    setMemberNick("");
+    setMemberPhone("");
+    setMemberPassword("");
+    setMemberEmail("");
+    // Close both potential parent states
+    handleSignupClose();
+    handleLoginClose();
   };
 
-  /** HANDLERS **/
-  const handleTabChange = (
-    event: React.SyntheticEvent,
-    newValue: "login" | "signup",
-  ) => {
+  const handleTabChange = (event: React.SyntheticEvent, newValue: "login" | "signup") => {
     setActiveTab(newValue);
-    // Clear form fields when switching tabs
-    if (newValue === "login") {
-      setMemberPhone("");
-      setMemberEmail("");
-    }
   };
 
-  const handleUserName = (e: T) => {
-    setMemberNick(e.target.value);
-  };
-  const handlePhone = (e: T) => {
-    setMemberPhone(e.target.value);
-  };
-  const handlePassword = (e: T) => {
-    setMemberPassword(e.target.value);
-  };
-  const handleEmail = (e: T) => {
-    setMemberEmail(e.target.value);
-  };
+  const handleUserName = (e: T) => setMemberNick(e.target.value);
+  const handlePhone = (e: T) => setMemberPhone(e.target.value);
+  const handlePassword = (e: T) => setMemberPassword(e.target.value);
+  const handleEmail = (e: T) => setMemberEmail(e.target.value);
+
   const handlePasswordKeyDown = (e: T) => {
     if (e.key === "Enter") {
-      if (activeTab === "signup") {
-        handleSignupRequest().then();
-      } else {
-        handleLoginRequest().then();
-      }
+      activeTab === "signup" ? handleSignupRequest() : handleLoginRequest();
     }
   };
 
   const handleSignupRequest = async () => {
     try {
-      console.log(
-        "inputs",
-        memberNick,
-        memberPassword,
-        memberPhone,
-        memberEmail,
-      );
-      const isFullfill =
-        memberNick !== "" &&
-        memberPhone !== "" &&
-        memberPassword !== "" &&
-        memberEmail !== "";
+      const isFullfill = memberNick !== "" && memberPhone !== "" && memberPassword !== "" && memberEmail !== "";
       if (!isFullfill) throw new Error(Messages.error3);
 
       const signupInput: MemberInput = {
-        memberNick: memberNick,
-        memberPhone: memberPhone,
-        memberPassword: memberPassword,
-        memberEmail: memberEmail,
+        memberNick,
+        memberPhone,
+        memberPassword,
+        memberEmail,
       };
 
       const member = new MemberService();
       const result = await member.signup(signupInput);
-      // Saving Authenticated user
+      
       setAuthMember(result);
-      handleSignupClose();
       toastSuccess("Successfully signed up!");
+      handleCloseAll(); // Closes modal correctly
     } catch (err) {
       toastError(err);
     }
@@ -138,30 +115,25 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
 
   const handleLoginRequest = async () => {
     try {
-      console.log("Logininputs", memberNick, memberPassword);
       const isFullfill = memberNick !== "" && memberPassword !== "";
       if (!isFullfill) throw new Error(Messages.error3);
 
       const loginInput: LoginInput = {
-        memberNick: memberNick,
-        memberPassword: memberPassword,
+        memberNick,
+        memberPassword,
       };
 
       const member = new MemberService();
       const result = await member.login(loginInput);
-      // Saving Authenticated user
+      
       setAuthMember(result);
-      handleLoginClose();
       toastSuccess("Successfully logged in!");
+      handleCloseAll(); // Closes modal correctly
     } catch (err) {
       toastError(err);
     }
   };
 
-  const switchToSignup = () => setActiveTab("signup");
-  const switchToLogin = () => setActiveTab("login");
-
-  // Determine if modal should be open
   const isOpen = signupOpen || loginOpen;
 
   return (
@@ -171,12 +143,10 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
         aria-describedby="transition-modal-description"
         className={classes.modal}
         open={isOpen}
-        onClose={getCloseHandler()}
+        onClose={handleCloseAll}
         closeAfterTransition
         BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
+        BackdropProps={{ timeout: 500 }}
       >
         <Fade in={isOpen}>
           <div className={classes.paper}>
@@ -203,6 +173,7 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
                         id="username"
                         label="Username"
                         variant="outlined"
+                        value={memberNick}
                         onChange={handleUserName}
                         fullWidth
                         className="auth-modal-field"
@@ -212,6 +183,7 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
                         label="Password"
                         type="password"
                         variant="outlined"
+                        value={memberPassword}
                         onChange={handlePassword}
                         onKeyDown={handlePasswordKeyDown}
                         fullWidth
@@ -228,7 +200,7 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
                     </Fab>
                     <div className="auth-modal-switch">
                       Don't have an account?
-                      <span onClick={switchToSignup}> Sign up</span>
+                      <span onClick={() => setActiveTab("signup")}> Sign up</span>
                     </div>
                   </>
                 ) : (
@@ -244,6 +216,7 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
                         id="username"
                         label="Username"
                         variant="outlined"
+                        value={memberNick}
                         onChange={handleUserName}
                         fullWidth
                         className="auth-modal-field"
@@ -252,6 +225,7 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
                         id="phone-number"
                         label="Phone Number"
                         variant="outlined"
+                        value={memberPhone}
                         onChange={handlePhone}
                         fullWidth
                         className="auth-modal-field"
@@ -260,6 +234,7 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
                         id="email"
                         label="Email"
                         variant="outlined"
+                        value={memberEmail}
                         onChange={handleEmail}
                         fullWidth
                         className="auth-modal-field"
@@ -269,6 +244,7 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
                         label="Password"
                         type="password"
                         variant="outlined"
+                        value={memberPassword}
                         onChange={handlePassword}
                         onKeyDown={handlePasswordKeyDown}
                         fullWidth
@@ -285,7 +261,7 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
                     </Fab>
                     <div className="auth-modal-switch">
                       Already have an account?
-                      <span onClick={switchToLogin}> Sign in</span>
+                      <span onClick={() => setActiveTab("login")}> Sign in</span>
                     </div>
                   </>
                 )}

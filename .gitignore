@@ -142,3 +142,6 @@ vite.config.ts.timestamp-*
 
 # image files
 uploads
+
+.DS_Store         # macOS system file
+.idea/             # JetBrains IDEs (if anyone uses them)
