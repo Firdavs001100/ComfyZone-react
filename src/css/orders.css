@@ -1,0 +1,265 @@
+/* ================= PAGE STRUCTURE ================= */
+.order-container {
+  padding-top: 80px;
+  padding-bottom: 100px;
+  background-color: #faf8f5; /* Soft luxury beige background */
+  min-height: 100vh;
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+.order-main-content {
+  width: 1300px; /* Matches your products-page width */
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ================= CENTERED TABS ================= */
+.order-nav-frame {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+  border-bottom: 1px solid #e6e2dc; /* Matches provider divider */
+  padding-bottom: 0;
+}
+
+.order-nav-frame .MuiTabs-flexContainer {
+  justify-content: center;
+  gap: 40px;
+}
+
+.order-nav-frame .MuiTabs-indicator {
+  height: 2px !important;
+  background-color: #c1a36f !important; 
+  border-radius: 2px;
+}
+
+.order-nav-frame .MuiTab-root {
+  text-transform: none !important;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500 !important;
+  font-size: 16px !important;
+  color: #7a746c !important;
+  min-width: auto !important;
+  padding: 12px 0 !important;
+  transition: all 0.3s ease !important;
+}
+
+.order-nav-frame .MuiTab-root:hover {
+  color: #b38b5b !important;
+}
+
+.order-nav-frame .MuiTab-root.Mui-selected {
+  color: #b38b5b !important;
+  font-weight: 600 !important;
+}
+
+/* ================= ORDER CARDS ================= */
+.orders-tab {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.order-card {
+  background: #ffffff !important;
+  border-radius: 20px !important;
+  /* Replaced generic border with project-vibe subtle border */
+  border: 1px solid #e6e2dc !important; 
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04) !important;
+  transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.3s ease !important;
+  overflow: visible !important;
+}
+
+.order-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(193, 163, 111, 0.12) !important;
+  border-color: #d6cbbf !important;
+}
+
+/* Card Header */
+.order-card .MuiCardContent-root {
+  padding: 30px !important;
+}
+
+.order-card .MuiTypography-subtitle1 {
+  font-family: "Poppins", sans-serif;
+  font-size: 18px;
+  color: #222;
+  letter-spacing: 0.5px;
+}
+
+/* Status Chips - Custom Luxury Style */
+.order-card .MuiChip-root {
+  height: 32px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  /* Force override default MUI colors to match vibe */
+}
+
+/* ================= PRODUCT ITEMS (The Rows) ================= */
+/* Overriding the inline 'rgba(0,0,0,0.02)' to match the beige/white theme */
+.order-card .MuiBox-root[sx*="rgba(0, 0, 0, 0.02)"] {
+  background-color: #fcfbf9 !important; /* Very light warm white */
+  border: 1px solid #f0ebe4 !important;
+  border-radius: 14px !important;
+  padding: 20px !important;
+  transition: all 0.3s ease;
+}
+
+.order-card .MuiBox-root[sx*="rgba(0, 0, 0, 0.02)"]:hover {
+  background-color: #ffffff !important;
+  border-color: #c1a36f !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* Product Avatar */
+.order-card .MuiAvatar-root {
+  border-radius: 12px !important;
+  border: 1px solid #e6e2dc !important;
+  background-color: #fff;
+}
+
+/* Product Name */
+.order-card .MuiTypography-body1 {
+  font-family: "Poppins", sans-serif;
+  color: #2b2b2b;
+}
+
+/* Item Total Price (Small) */
+.order-card .MuiTypography-root[sx*="linear-gradient"] {
+  font-family: "Poppins", sans-serif;
+  font-weight: 600 !important;
+}
+
+/* ================= TOTALS & PRICES ================= */
+.order-card .MuiDivider-root {
+  border-color: #f0ebe4 !important;
+}
+
+/* SPECIFIC: The Main Total Price Element */
+.css-mzy8if-MuiTypography-root {
+  /* Using your gold gradient */
+  background: linear-gradient(135deg, #c1a36f 0%, #b38b5b 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  /* Fallback color */
+  color: #b38b5b;
+  font-family: "Poppins", sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 22px !important; /* Slightly larger for impact */
+  letter-spacing: -0.5px;
+}
+
+/* Labels for Subtotal/Delivery */
+.order-card .MuiTypography-body2 {
+  color: #7a746c !important;
+  font-size: 14px;
+}
+
+/* ================= BUTTONS (PAYMENT & CANCEL) ================= */
+
+/* 1. Payment Button - High Visibility Gold */
+.order-card .MuiButton-containedPrimary {
+  background: #c1a36f !important; /* Solid Gold */
+  color: #ffffff !important; /* White Text */
+  border-radius: 30px !important; /* Matches add-to-cart-btn */
+  padding: 12px 28px !important;
+  font-family: "Inter", sans-serif;
+  font-weight: 600 !important;
+  font-size: 15px !important;
+  text-transform: none !important;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 12px rgba(193, 163, 111, 0.3) !important;
+  transition: all 0.35s ease !important;
+}
+
+.order-card .MuiButton-containedPrimary:hover {
+  background: #b38b5b !important; /* Deep Gold on Hover */
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(193, 163, 111, 0.45) !important;
+}
+
+/* 2. Cancel Button - Clean Outline */
+.order-card .MuiButton-outlinedError {
+  border-radius: 30px !important;
+  padding: 12px 28px !important;
+  font-family: "Inter", sans-serif;
+  font-weight: 500 !important;
+  text-transform: none !important;
+  border: 1px solid #e6e2dc !important; /* Subtle border */
+  color: #7a746c !important;
+  transition: all 0.3s ease !important;
+}
+
+.order-card .MuiButton-outlinedError:hover {
+  border-color: #ef4444 !important;
+  color: #ef4444 !important;
+  background-color: #fff5f5 !important;
+}
+
+/* ================= EMPTY STATE ================= */
+.empty-orders {
+  margin-top: 40px;
+  padding: 80px 0 !important;
+  background: #fff;
+  border-radius: 20px;
+  border: 1px dashed #e6e2dc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.empty-orders img {
+  opacity: 0.8;
+  filter: sepia(0.2); /* Slight warm tone to image */
+}
+
+.empty-orders .MuiTypography-h5 {
+  font-family: "Poppins", sans-serif;
+  color: #2b2b2b;
+  margin-top: 24px;
+}
+
+.empty-orders .MuiTypography-body2 {
+  color: #999;
+}
+
+/* ================= ANIMATION ================= */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 1350px) {
+  .order-main-content {
+    width: 95%;
+  }
+}
+
+@media (max-width: 600px) {
+  .order-nav-frame .MuiTab-root {
+    font-size: 13px !important;
+    padding: 8px !important;
+  }
+  
+  .order-card .MuiCardContent-root {
+    padding: 20px !important;
+  }
+  
+  .order-card .MuiButton-root {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}

@@ -3,7 +3,7 @@ import { Route, Switch, useLocation } from "react-router-dom";
 import HomePage from "./screens/homePage";
 import ProductsPage from "./screens/productsPage/index";
 import UserPage from "./screens/userPage";
-// import OrdersPage from "./screens/ordersPage/index";
+import OrdersPage from "./screens/ordersPage/index";
 import HelpPage from "./screens/helpPage";
 import HomeNavbar from "./components/headers/HomeNavbar";
 import OtherNavbar from "./components/headers/OtherNavbar";
@@ -14,10 +14,10 @@ import { toastError, toastSmallSuccess } from "../lib/toastAlert";
 import { Messages } from "../lib/config";
 import MemberService from "../services/MemberService";
 import { useGlobals } from "./hooks/useGlobals";
+import { Toaster } from "react-hot-toast";
 import "../css/app.css";
 import "../css/navbar.css";
 import "../css/footer.css";
-import { Toaster } from "react-hot-toast";
 
 function App() {
   const location = useLocation();
@@ -95,9 +95,9 @@ function App() {
         <Route path="/member-page">
           <UserPage />
         </Route>
-        {/* <Route path="/orders">
+        <Route path="/orders">
           <OrdersPage />
-        </Route> */}
+        </Route>
         <Route path="/help">
           <HelpPage />
         </Route>
