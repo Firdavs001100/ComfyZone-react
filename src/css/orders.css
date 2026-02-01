@@ -30,7 +30,7 @@
 
 .order-nav-frame .MuiTabs-indicator {
   height: 2px !important;
-  background-color: #c1a36f !important; 
+  background-color: #c1a36f !important;
   border-radius: 2px;
 }
 
@@ -66,9 +66,12 @@
   background: #ffffff !important;
   border-radius: 20px !important;
   /* Replaced generic border with project-vibe subtle border */
-  border: 1px solid #e6e2dc !important; 
+  border: 1px solid #e6e2dc !important;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04) !important;
-  transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.3s ease !important;
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    border-color 0.3s ease !important;
   overflow: visible !important;
 }
 
@@ -145,6 +148,7 @@
 .css-mzy8if-MuiTypography-root {
   /* Using your gold gradient */
   background: linear-gradient(135deg, #c1a36f 0%, #b38b5b 100%) !important;
+  background-clip: text;
   -webkit-background-clip: text !important;
   -webkit-text-fill-color: transparent !important;
   /* Fallback color */
@@ -253,11 +257,11 @@
     font-size: 13px !important;
     padding: 8px !important;
   }
-  
+
   .order-card .MuiCardContent-root {
     padding: 20px !important;
   }
-  
+
   .order-card .MuiButton-root {
     width: 100%;
     margin-bottom: 10px;

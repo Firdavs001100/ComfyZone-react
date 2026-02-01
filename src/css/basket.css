@@ -20,7 +20,7 @@
 .basket-frame {
   width: 320px;
   max-height: 500px;
-  background: #FFFFFF;
+  background: #ffffff;
   border-radius: 12px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
   overflow: hidden;
@@ -31,7 +31,7 @@
 /* ================= BASKET HEADER ================= */
 .all-check-box {
   padding: 20px;
-  background: #FAF3EA;
+  background: #faf3ea;
   border-bottom: 1px solid #eee;
   font-weight: 600;
   font-size: 16px;
@@ -117,6 +117,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
+  line-clamp: 2;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 }
@@ -141,7 +142,8 @@
   align-items: center;
 }
 
-.remove, .add {
+.remove,
+.add {
   width: 28px;
   height: 28px;
   border-radius: 50%;
@@ -157,20 +159,22 @@
   transition: all 0.2s ease;
 }
 
-.remove:hover, .add:hover {
+.remove:hover,
+.add:hover {
   background: #b88e2f;
   color: white;
   border-color: #b88e2f;
 }
 
-.remove:active, .add:active {
+.remove:active,
+.add:active {
   transform: scale(0.95);
 }
 
 /* ================= ORDER SUMMARY ================= */
 .basket-order {
   padding: 20px;
-  background: #FAF3EA;
+  background: #faf3ea;
   border-top: 1px solid #eee;
   display: flex;
   justify-content: space-between;
@@ -237,30 +241,30 @@
   .basket-frame {
     width: 280px;
   }
-  
+
   .basket-info-box {
     grid-template-columns: 20px 50px 1fr auto;
     gap: 6px 10px;
   }
-  
+
   .product-img {
     width: 50px;
     height: 50px;
   }
-  
+
   .product-name {
     font-size: 13px;
   }
-  
+
   .product-price {
     font-size: 14px;
   }
-  
+
   .basket-order {
     flex-direction: column;
     gap: 15px;
   }
-  
+
   .basket-order .MuiButton-root {
     width: 100%;
   }
@@ -286,8 +290,18 @@
   animation: slideIn 0.4s ease-out backwards;
 }
 
-.basket-info-box:nth-child(1) { animation-delay: 0.05s; }
-.basket-info-box:nth-child(2) { animation-delay: 0.1s; }
-.basket-info-box:nth-child(3) { animation-delay: 0.15s; }
-.basket-info-box:nth-child(4) { animation-delay: 0.2s; }
-.basket-info-box:nth-child(5) { animation-delay: 0.25s; }
+.basket-info-box:nth-child(1) {
+  animation-delay: 0.05s;
+}
+.basket-info-box:nth-child(2) {
+  animation-delay: 0.1s;
+}
+.basket-info-box:nth-child(3) {
+  animation-delay: 0.15s;
+}
+.basket-info-box:nth-child(4) {
+  animation-delay: 0.2s;
+}
+.basket-info-box:nth-child(5) {
+  animation-delay: 0.25s;
+}

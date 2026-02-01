@@ -23,7 +23,7 @@
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(20px);
   border-radius: 24px;
-  box-shadow: 
+  box-shadow:
     0 1px 3px rgba(0, 0, 0, 0.05),
     0 20px 40px -10px rgba(193, 163, 111, 0.1);
   padding: 40px;
@@ -32,7 +32,7 @@
 }
 
 .user-page .my-page-left:hover {
-  box-shadow: 
+  box-shadow:
     0 1px 3px rgba(0, 0, 0, 0.05),
     0 30px 60px -15px rgba(193, 163, 111, 0.2);
   transform: translateY(-2px);
@@ -50,7 +50,7 @@
 }
 
 .user-page .menu-name::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -1px;
   left: 0;
@@ -75,7 +75,7 @@
 .user-page .order-info-box {
   background: linear-gradient(135deg, #e9e1d3 0%, #e4d6c6 100%);
   border-radius: 24px;
-  box-shadow: 
+  box-shadow:
     0 1px 3px rgba(0, 0, 0, 0.1),
     0 30px 60px -10px rgba(193, 163, 111, 0.35);
   padding: 48px 32px;
@@ -85,7 +85,7 @@
 }
 
 .user-page .order-info-box:hover {
-  box-shadow: 
+  box-shadow:
     0 1px 3px rgba(0, 0, 0, 0.1),
     0 40px 80px -15px rgba(193, 163, 111, 0.45);
   transform: translateY(-4px);
@@ -104,7 +104,7 @@
   border-radius: 50%;
   object-fit: cover;
   border: 3px solid #c1a36f;
-  box-shadow: 
+  box-shadow:
     0 8px 24px rgba(0, 0, 0, 0.15),
     0 0 0 6px rgba(193, 163, 111, 0.15);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -113,7 +113,7 @@
 .user-page .order-user-avatar:hover {
   transform: scale(1.05);
   border-color: #b38b5b;
-  box-shadow: 
+  box-shadow:
     0 12px 32px rgba(0, 0, 0, 0.2),
     0 0 0 6px rgba(193, 163, 111, 0.2);
 }
@@ -237,7 +237,7 @@
   border-radius: 50%;
   object-fit: cover;
   border: 3px solid rgba(193, 163, 111, 0.2);
-  box-shadow: 
+  box-shadow:
     0 4px 16px rgba(0, 0, 0, 0.06),
     0 0 0 6px rgba(193, 163, 111, 0.05);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -351,7 +351,7 @@
   outline: none;
   border-color: rgba(193, 163, 111, 0.4);
   background: #ffffff;
-  box-shadow: 
+  box-shadow:
     0 0 0 4px rgba(193, 163, 111, 0.08),
     0 2px 8px rgba(193, 163, 111, 0.1);
   transform: translateY(-1px);
@@ -389,7 +389,7 @@
   border-radius: 12px;
   text-transform: none;
   letter-spacing: 0.3px;
-  box-shadow: 
+  box-shadow:
     0 2px 8px rgba(193, 163, 111, 0.25),
     0 8px 24px rgba(193, 163, 111, 0.15);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -399,13 +399,18 @@
 }
 
 .user-page .save-box button::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
   transition: left 0.5s;
 }
 
@@ -415,7 +420,7 @@
 
 .user-page .save-box button:hover {
   transform: translateY(-2px);
-  box-shadow: 
+  box-shadow:
     0 4px 12px rgba(193, 163, 111, 0.35),
     0 12px 32px rgba(193, 163, 111, 0.25);
   border-color: rgba(193, 163, 111, 0.5);
@@ -424,7 +429,7 @@
 
 .user-page .save-box button:active {
   transform: translateY(0);
-  box-shadow: 
+  box-shadow:
     0 2px 6px rgba(193, 163, 111, 0.25),
     0 4px 16px rgba(193, 163, 111, 0.15);
 }
@@ -597,6 +602,7 @@
 }
 
 .user-page input[type="number"] {
+  appearance: textfield;
   -moz-appearance: textfield;
 }
 
@@ -630,7 +636,7 @@
 
 .user-page .spec-input.error:focus,
 .user-page .spec-textarea.error:focus {
-  box-shadow: 
+  box-shadow:
     0 0 0 4px rgba(231, 76, 60, 0.08),
     0 2px 8px rgba(231, 76, 60, 0.15);
 }
@@ -644,7 +650,7 @@
 
 .user-page .spec-input.success:focus,
 .user-page .spec-textarea.success:focus {
-  box-shadow: 
+  box-shadow:
     0 0 0 4px rgba(39, 174, 96, 0.08),
     0 2px 8px rgba(39, 174, 96, 0.15);
 }
@@ -655,7 +661,7 @@
     background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(20px);
   }
-  
+
   .user-page .order-info-box {
     backdrop-filter: blur(20px);
   }
@@ -683,7 +689,7 @@
 }
 
 .user-page .save-box button::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
