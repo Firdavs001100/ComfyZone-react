@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Container, Stack } from "@mui/material";
 import { Visibility, DescriptionOutlined } from "@mui/icons-material";
 import {
@@ -15,6 +15,9 @@ import { createSelector } from "reselect";
 import { retrievePopularProducts } from "./selector";
 import { Product } from "../../../lib/types/product";
 import { serverApi } from "../../../lib/config";
+import { useHistory } from "react-router-dom";
+import { CartItem } from "../../../lib/types/search";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 /** REDUX SELECTOR */
 const popularProductsRetriever = createSelector(
@@ -22,8 +25,24 @@ const popularProductsRetriever = createSelector(
   (popularProducts) => ({ popularProducts }),
 );
 
-export default function PopularProducts() {
+interface Props {
+  onAdd: (item: CartItem) => void;
+}
+
+export default function PopularProducts({ onAdd }: Props) {
   const { popularProducts } = useSelector(popularProductsRetriever);
+  const history = useHistory();
+
+  const [favorites, setFavorites] = useState<Set<string>>(new Set());
+
+  const toggleFavorite = (e: React.MouseEvent, id: string) => {
+    e.stopPropagation();
+    setFavorites((prev) => {
+      const newSet = new Set(prev);
+      newSet.has(id) ? newSet.delete(id) : newSet.add(id);
+      return newSet;
+    });
+  };
 
   console.log("popularProducts:", popularProducts);
   return (
@@ -40,12 +59,43 @@ export default function PopularProducts() {
 
                 return (
                   <CssVarsProvider key={product._id}>
-                    <Card className="card">
+                    <Card
+                      className="card"
+                      onClick={() =>
+                        history.push(
+                          `/products/${product._id}/${encodeURIComponent(
+                            product.productName.replace(/\s+/g, "-"),
+                          )}`,
+                        )
+                      }
+                      sx={{ cursor: "pointer" }}
+                    >
                       <CardCover>
                         <img src={imagePath} alt="" />
                       </CardCover>
 
                       <CardCover className="card-cover" />
+
+                      {/* Add to Cart */}
+                      <button
+                        className="popular-add"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onAdd({
+                            _id: product._id,
+                            name: product.productName,
+                            price: product.isDiscounted
+                              ? (product.productSalePrice ??
+                                product.productPrice)
+                              : product.productPrice,
+                            quantity: 1,
+                            image: product.productImages[0],
+                          });
+                        }}
+                      >
+                        <ShoppingCartIcon sx={{ fontSize: 18 }} />
+                        Add to Cart
+                      </button>
 
                       <CardContent sx={{ justifyContent: "flex-end" }}>
                         <Stack
@@ -96,7 +146,10 @@ export default function PopularProducts() {
                           }
                           textColor="neutral.300"
                         >
-                          {product.productDesc}
+                          {product.productDesc &&
+                          product.productDesc.length > 65
+                            ? `${product.productDesc.slice(0, 65)}...`
+                            : product.productDesc}
                         </Typography>
                       </CardOverflow>
                     </Card>

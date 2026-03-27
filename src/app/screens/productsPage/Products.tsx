@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Stack,
   Typography,
@@ -8,9 +8,6 @@ import {
   Checkbox,
   Slider,
   Pagination,
-  Menu,
-  MenuItem,
-  Button,
   Box,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
@@ -59,6 +56,9 @@ export default function Products(props: ProductProps) {
   const queryParams = new URLSearchParams(location.search);
   const categoryFromUrl = queryParams.get("category") as ProductCategory | null;
   const searchFromUrl = queryParams.get("search") ?? "";
+  const typeFromUrl = queryParams.get("type") as ProductType | null;
+  const minFromUrl = Number(queryParams.get("minPrice") ?? 0);
+  const maxFromUrl = Number(queryParams.get("maxPrice") ?? 5_000_000);
 
   /* ================= SEARCH STATE ================= */
 
@@ -71,6 +71,7 @@ export default function Products(props: ProductProps) {
   });
 
   useEffect(() => {
+    setSelectedCategories(categoryFromUrl ? [categoryFromUrl] : []);
     setProductSearch((prev) => ({
       ...prev,
       page: 1,
@@ -90,21 +91,28 @@ export default function Products(props: ProductProps) {
 
   /* ================= SORT ================= */
 
-  const [sortAnchorEl, setSortAnchorEl] = useState<null | HTMLElement>(null);
+  const sortRef = useRef<HTMLDivElement>(null);
+  const [sortOpen, setSortOpen] = useState(false);
   const [selectedSort, setSelectedSort] = useState("New");
 
-  const handleSortChange = (order: string) => {
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (sortRef.current && !sortRef.current.contains(e.target as Node)) {
+        setSortOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleSortSelect = (label: string, order: string) => {
+    setSelectedSort(label);
+    setSortOpen(false);
     setProductSearch((prev) => ({
       ...prev,
       page: 1,
       order,
     }));
-  };
-
-  const handleSortSelect = (label: string, order: string) => {
-    setSelectedSort(label);
-    setSortAnchorEl(null);
-    handleSortChange(order);
   };
 
   /* ================= TEXT SEARCH ================= */
@@ -141,9 +149,14 @@ export default function Products(props: ProductProps) {
     : ALL_CATEGORIES.slice(0, 3);
 
   const toggleCategory = (category: ProductCategory) => {
-    setSelectedCategories((prev) =>
-      prev.includes(category) ? [] : [category],
-    );
+    const next = selectedCategories.includes(category) ? [] : [category];
+    setSelectedCategories(next);
+
+    // ✅ keep URL in sync
+    const params = new URLSearchParams(location.search);
+    if (next.length) params.set("category", next[0]);
+    else params.delete("category");
+    history.replace({ search: params.toString() });
   };
 
   /* ================= TYPE ================= */
@@ -162,20 +175,56 @@ export default function Products(props: ProductProps) {
   ];
 
   const [typesExpanded, setTypesExpanded] = useState(false);
-  const [selectedTypes, setSelectedTypes] = useState<ProductType[]>([]);
+  const [selectedTypes, setSelectedTypes] = useState<ProductType[]>(
+    typeFromUrl ? [typeFromUrl] : [],
+  );
 
   const visibleTypes = typesExpanded ? ALL_TYPES : ALL_TYPES.slice(0, 5);
 
+  useEffect(() => {
+    setSelectedTypes(typeFromUrl ? [typeFromUrl] : []);
+    setProductSearch((prev) => ({
+      ...prev,
+      page: 1,
+      productType: typeFromUrl ?? undefined,
+    }));
+  }, [typeFromUrl]);
+
   const toggleType = (type: ProductType) => {
-    setSelectedTypes((prev) => (prev.includes(type) ? [] : [type]));
+    const next = selectedTypes.includes(type) ? [] : [type];
+    setSelectedTypes(next);
+
+    const params = new URLSearchParams(location.search);
+    if (next.length) params.set("type", next[0]);
+    else params.delete("type");
+    history.replace({ search: params.toString() });
   };
 
   /* ================= PRICE FILTER ================= */
 
-  const [price, setPrice] = useState<number[]>([0, 5_000_000]);
+  const [price, setPrice] = useState<number[]>([minFromUrl, maxFromUrl]);
+
+  useEffect(() => {
+    setPrice([minFromUrl, maxFromUrl]);
+    setProductSearch((prev) => ({
+      ...prev,
+      page: 1,
+      minPrice: minFromUrl,
+      maxPrice: maxFromUrl,
+    }));
+  }, [minFromUrl, maxFromUrl]);
 
   const handleSliderChange = (_: Event, newValue: number | number[]) => {
     setPrice(newValue as number[]);
+  };
+
+  const pushPriceToUrl = (next: number[]) => {
+    const params = new URLSearchParams(location.search);
+    if (next[0] !== 0) params.set("minPrice", String(next[0]));
+    else params.delete("minPrice");
+    if (next[1] !== 5_000_000) params.set("maxPrice", String(next[1]));
+    else params.delete("maxPrice");
+    history.replace({ search: params.toString() });
   };
 
   const handleMinChange = (value: number) => {
@@ -197,12 +246,8 @@ export default function Products(props: ProductProps) {
       page: 1,
       limit: 12,
       search: value || undefined,
-      productCategory: selectedCategories[0],
-      productType: selectedTypes[0],
-      minPrice: price[0],
-      maxPrice: price[1],
     }));
-  }, [value, searchFromUrl, selectedCategories, selectedTypes, price]);
+  }, [value, searchFromUrl]);
 
   /* ================= PAGINATION ================= */
 
@@ -256,32 +301,35 @@ export default function Products(props: ProductProps) {
       <Stack direction="row" justifyContent="flex-end" className="sort-right">
         <span className="sort-label">Sort by</span>
 
-        <Button
-          className="sort-button"
-          onClick={(e) => setSortAnchorEl(e.currentTarget)}
-          endIcon={<KeyboardArrowDownRoundedIcon />}
-        >
-          {selectedSort}
-        </Button>
+        <div className={`sort-wrapper ${sortOpen ? "open" : ""}`} ref={sortRef}>
+          <button
+            className="sort-button"
+            onClick={() => setSortOpen((p) => !p)}
+          >
+            <span>{selectedSort}</span>
+            <KeyboardArrowDownRoundedIcon className="sort-arrow" />
+          </button>
 
-        <Menu
-          anchorEl={sortAnchorEl}
-          open={Boolean(sortAnchorEl)}
-          onClose={() => setSortAnchorEl(null)}
-        >
-          <MenuItem onClick={() => handleSortSelect("New", "createdAt")}>
-            New
-          </MenuItem>
-          <MenuItem onClick={() => handleSortSelect("Popular", "views")}>
-            Popular
-          </MenuItem>
-          <MenuItem onClick={() => handleSortSelect("Price ↑", "priceAsc")}>
-            Price ↑
-          </MenuItem>
-          <MenuItem onClick={() => handleSortSelect("Price ↓", "priceDesc")}>
-            Price ↓
-          </MenuItem>
-        </Menu>
+          <div className="sort-dropdown">
+            {[
+              { label: "New", order: "createdAt" },
+              { label: "Popular", order: "views" },
+              { label: "Price ↑", order: "priceAsc" },
+              { label: "Price ↓", order: "priceDesc" },
+            ].map(({ label, order }) => (
+              <div
+                key={label}
+                className={`sort-option ${selectedSort === label ? "active" : ""}`}
+                onClick={() => {
+                  handleSortSelect(label, order);
+                  setSortOpen(false);
+                }}
+              >
+                {label}
+              </div>
+            ))}
+          </div>
+        </div>
       </Stack>
 
       <Stack className="products-list-page" direction="row">
@@ -403,6 +451,9 @@ export default function Products(props: ProductProps) {
                 min={0}
                 max={5_000_000}
                 onChange={handleSliderChange}
+                onChangeCommitted={(_e, newValue) =>
+                  pushPriceToUrl(newValue as number[])
+                }
                 valueLabelDisplay="on"
                 valueLabelFormat={(v) => `₩${formatWon(v)}`}
               />
@@ -412,6 +463,8 @@ export default function Products(props: ProductProps) {
                   type="text"
                   value={formatWon(price[0])}
                   onChange={(e) => handleMinChange(parseWon(e.target.value))}
+                  onBlur={() => pushPriceToUrl(price)}
+                  onKeyDown={(e) => e.key === "Enter" && pushPriceToUrl(price)}
                   className="price-box"
                 />
                 <span className="price-separator">–</span>
@@ -419,6 +472,8 @@ export default function Products(props: ProductProps) {
                   type="text"
                   value={formatWon(price[1])}
                   onChange={(e) => handleMaxChange(parseWon(e.target.value))}
+                  onBlur={() => pushPriceToUrl(price)}
+                  onKeyDown={(e) => e.key === "Enter" && pushPriceToUrl(price)}
                   className="price-box"
                 />
               </Stack>

@@ -31,14 +31,94 @@
   color: #777;
 }
 
+.products-page .sort-wrapper {
+  position: relative;
+  min-width: 130px;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition:
+    border-radius 0.3s ease,
+    box-shadow 0.3s ease;
+  z-index: 100;
+}
+
+.products-page .sort-wrapper.open {
+  border-radius: 16px 16px 0 0;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
 .products-page .sort-button {
-  text-transform: none !important;
-  font-weight: 500 !important;
-  color: #222 !important;
-  background: #ffffff !important;
-  padding: 6px 14px !important;
-  border-radius: 12px !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 16px;
+  background: transparent;
+  border: none;
+  border-radius: 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #222;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.products-page .sort-arrow {
+  transition: transform 0.3s ease;
+  font-size: 20px !important;
+  color: #888;
+}
+
+.products-page .sort-wrapper.open .sort-arrow {
+  transform: rotate(180deg);
+}
+
+.products-page .sort-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  border-radius: 0 0 16px 16px;
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  transition:
+    max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.25s ease;
+}
+
+.products-page .sort-wrapper.open .sort-dropdown {
+  max-height: 200px;
+  opacity: 1;
+}
+
+.products-page .sort-option {
+  padding: 10px 16px;
+  font-size: 14px;
+  color: #555;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.products-page .sort-option:last-child {
+  border-radius: 0 0 16px 16px;
+}
+
+.products-page .sort-option:hover {
+  background: #faf6f0;
+  color: #b38b5b;
+}
+
+.products-page .sort-option.active {
+  color: #b38b5b;
+  font-weight: 600;
+  background: #fdf9f4;
 }
 
 .products-list-page .filter {

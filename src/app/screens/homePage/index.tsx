@@ -13,6 +13,7 @@ import Advertisement from "./Advertisement";
 import TopProviders from "./TopProviders";
 import Events from "./Events";
 import SetupPage from "./SetupPage";
+import { CartItem } from "../../../lib/types/search";
 
 // REDUX SLICE & SELECTOR
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -21,7 +22,11 @@ const actionDispatch = (dispatch: Dispatch) => ({
   setTopProviders: (data: Provider[]) => dispatch(setTopProviders(data)),
 });
 
-export default function HomePage() {
+interface HomePageProps {
+  onAdd: (item: CartItem) => void;
+}
+
+export default function HomePage({ onAdd }: HomePageProps) {
   // Selector : Store => DATA  store+ data olib ishlatish
   const { setPopularProducts, setNewProducts, setTopProviders } =
     actionDispatch(useDispatch());
@@ -63,7 +68,7 @@ export default function HomePage() {
   return (
     <div className={"homepage"}>
       <ProductRange />
-      <PopularProducts />
+      <PopularProducts onAdd={onAdd} />
       <Advertisement />
       <TopProviders />
       <Events />

@@ -55,6 +55,7 @@ export interface ProductUpdateInput {
   productType?: ProductType;
   productMaterial?: string;
   productColor?: string;
+  productImages?: string[];
   productStockCount?: number;
   isDiscounted?: boolean;
 }
@@ -67,6 +68,6 @@ export interface ProductInquiry {
   productType?: ProductType;
   productProvider?: string;
   search?: string;
-   minPrice?: number;
+  minPrice?: number;
   maxPrice?: number;
 }

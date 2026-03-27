@@ -122,6 +122,45 @@
   );
 }
 
+/* ================= ADD TO CART BUTTON ================= */
+.homepage .popular-products-frame .cards-frame .card .popular-add {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(0.95);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  padding: 14px 28px;
+  border-radius: 30px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #222;
+  z-index: 10;
+  opacity: 0;
+  transition: all 0.35s ease;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.homepage .popular-products-frame .cards-frame .card:hover .popular-add {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.homepage .popular-products-frame .cards-frame .card .popular-add svg {
+  font-size: 20px; /* ✅ SAME as product page */
+}
+
+.homepage .popular-products-frame .cards-frame .card .popular-add:hover {
+  background: #c1a36f;
+  color: #ffffff;
+}
+
 .homepage .popular-products-frame .cards-frame .card .card-title {
   font-size: 20px;
   font-weight: 600;
@@ -398,7 +437,7 @@
 .swiper-pagination-bullet-active {
   background: #c1a36f;
   transform: scale(1.2);
-} 
+}
 
 /* ================= FURNITURE SHOWCASE ================= */
 .furniture-showcase {
